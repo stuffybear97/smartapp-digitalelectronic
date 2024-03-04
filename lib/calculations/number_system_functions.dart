@@ -1,10 +1,11 @@
 //import 'dart:js_interop';
-
+import 'base_conversion.dart';
 import 'package:flutter_tex/flutter_tex.dart';
 
 import 'package:flutter_math_fork/ast.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:flutter_math_fork/tex.dart';
+import 'dart:math';
 
 
 
@@ -329,3 +330,197 @@ String addOneToBinary(String binary) {
 
   return binaryList.join('');
 }
+
+
+//create fuinction that does A_x + B_y where either one of the number or the base of the number are unknown
+
+
+// Function to allow user to input the answer to A_x + B_y = Z and find the unknown x
+String findUnknownX(String A, String B, String y, String Z) {
+  String explanation = '';
+  int A_value = int.parse(A);
+  int y_value = int.parse(y);
+  int Z_value = int.parse(Z);
+  int B_value = int.parse(B,radix: y_value);
+
+  // Step 1: Solve for x
+  int x = (Z_value - (B_value * y_value)) ~/ A_value;
+
+  // Step 2: Generate working explanation
+  explanation += "1. Solve for x: x = (Z - (B * y)) ~/ A\n";
+  explanation += "   x = ($Z_value - ($B_value * $y_value)) ~/ $A_value\n";
+  explanation += "   x = $x\n";
+
+  // Step 3: Return answer and elaborate on the working explanation
+  return "Answer: x = $x\n\nWorking Explanation:\n$explanation";
+}
+
+
+List<String> calculateUnknownX(String A, String B, String y, String Z) {
+  try{
+    String explanation = '';
+    int A_Base10 = 0;
+    int y_value = int.parse(y);
+    int Z_value = int.parse(Z);
+    int B_value = baseToDecimalConversionFunc(B,y_value);
+    int x = 0;
+    A_Base10 = Z_value - B_value;
+    String A_Basei = '';
+   /*  for(int i = 2; i <= 37; i++)
+    {
+      try
+      {
+      A_Basei=A_Base10.toRadixString(i);
+      if(A_Basei == A)
+        {
+          x = i;
+          break;
+        }
+
+
+      }
+      catch(E)
+      {
+        continue;
+      }
+
+    }  */
+    // Step 1: Solve for x
+    
+    // Step 2: Generate working explanation
+    explanation += "1. Solve for x:\n";
+    explanation += "A in base 10 = $Z_value - $B_value = $A_Base10\n";
+    explanation += "find the base by trail and error starting from the largest value of A_x + 1 and convert to check with A_base10";
+    // Step 3: Return answer and working explanation
+    return [A + " convert to decimal incement the base and compaore to its decimal value: " + A_Base10.toString(),explanation];
+  }
+  catch(E){
+    return ['Error: Invalid input.','Error: Invalid input.'];
+  }
+  
+  
+}
+
+// Function to solve for A in A_x + B_y = Z
+List<String> calculateUnknownA(String B, String y, String Z, String x) {
+  try{
+    String explanation = '';
+    int x_value = int.parse(x);
+    int y_value = int.parse(y);
+    int Z_value = int.parse(Z);
+    int B_value = baseToDecimalConversionFunc(B, y_value);
+
+    // Step 1: Solve for A
+    int A = 0;
+    //for A in base 10
+    A = Z_value - B_value;
+    String A_x = A.toRadixString(x_value);
+    //for A value in base x
+    explanation += "Solve for A: A_"+x+" = "+Z+"_10 - "+B+"_"+y+"\n";
+    explanation += " A in base 10 = $Z_value - $B_value = $A \n";
+    explanation += "A in base $x = $A_x\n";
+
+    //A = Z_value
+    // Step 2: Generate working explanation
+    
+
+    // Step 3: Return answer and working explanation
+    return [A_x.toString(),explanation];
+  }
+  catch(E){
+    return ['Error: Invalid input.','Error: Invalid input.'];
+  }
+  
+}
+
+
+String baseToDecimalConversion(String value_baseN) {
+  List<String> parts = value_baseN.split(',');
+  String baseNValue = parts[0];
+  int baseN = int.parse(parts[1]);
+  String steps = "Step-by-step working:\n";
+  int decimal = 0;
+      // Process each digit from right to left
+    for (int i = 0; i < baseNValue.length; i++) {
+      int digitValue = getDecimalValueFromHexDigit(baseNValue[baseNValue.length - i - 1]);
+      num positionValue = digitValue * pow(baseN, i); // Equivalent to pow(16, i)
+      decimal += int.parse(positionValue.toString());
+      
+      steps += "${baseNValue[baseNValue.length - i - 1]} (hex) => $digitValue * 16^$i = $positionValue\n";
+    }
+
+  steps += "Sum of all position values = $decimal (decimal)";
+  String result = "Decimal: $decimal\n\n$steps";
+  //int decimalValue = int.parse(parts[0], radix: int.parse(parts[1]));
+  return result;
+}
+
+
+//Conver Dec to BaseN
+String convertDecimalToBaseNGivenDec (String decBaseN)  {
+  try{
+  List<String> parts = decBaseN.split(',');
+  String DecValue = parts[0];
+  int decimal = int.parse(DecValue);
+  String DesiredBaseN = parts[1];
+  int baseN = int.parse(DesiredBaseN);
+  String steps = "working:\n";
+  String BaseNValue = "";
+      while (decimal > 0) {
+      int remainder = decimal % baseN;
+      String BaseNDigit = getBaseNDigitDigit(remainder);
+      BaseNValue = BaseNDigit + BaseNValue;
+      steps += "Decimal: $decimal/16 = Q: ${decimal ~/ baseN}, R: $remainder (becomes $BaseNDigit in $baseN)\n";
+      decimal = decimal ~/ baseN;
+    }
+
+    String result = "$BaseNValue, \n\n$steps";
+    return result;
+  }
+  catch(E){
+    return 'Error: Invalid input.';
+  }
+}
+String getBaseNDigitDigit(int remainder) 
+{
+  if (remainder >= 0 && remainder <= 9) {
+    return remainder.toString();
+  } else {
+    return String.fromCharCode('A'.codeUnitAt(0) + (remainder - 10));
+  }
+}
+
+/*
+Future<String> convertDecimalToHex(String decimalValue) async {
+  try {
+    int decimal = int.parse(decimalValue);
+    if (decimal == 0) {
+      return "0\n\nDecimal 0 in hexadecimal is 0.";
+    }
+
+    String hexa = "";
+    String steps = "working:\n";
+    
+    while (decimal > 0) {
+      int remainder = decimal % 16;
+      String hexDigit = getHexDigit(remainder);
+      hexa = hexDigit + hexa;
+      steps += "Decimal: $decimal/16 = Q: ${decimal ~/ 16}, R: $remainder (becomes $hexDigit in hex)\n";
+      decimal = decimal ~/ 16;
+    }
+
+    String result = "$hexa, \n\n$steps";
+    return result;
+  } catch (e) {
+    return 'Invalid Input';
+  }
+}
+
+String getHexDigit(int remainder) {
+  if (remainder >= 0 && remainder <= 9) {
+    return remainder.toString();
+  } else {
+    return String.fromCharCode('A'.codeUnitAt(0) + (remainder - 10));
+  }
+}
+ */

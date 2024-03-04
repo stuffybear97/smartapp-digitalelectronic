@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'calculations/number_system_functions.dart';
@@ -172,7 +173,7 @@ class SecondPage extends StatefulWidget {
   _SecondPageState createState() => _SecondPageState();
 }
 const List<String> list = <String>['Binary to Dec', 'Dec to Binary', 'Dec to Hex', 'Hex to Dex'
-,'Hex to Binary','Binary to Hex','dec to 2complements','hex to 2complements'];
+,'Hex to Binary','Binary to Hex','dec to 2complements','hex to 2complements','baseN to Dec','Dec to baseN'];
 String _selection = 'Binary to Dec';
 String hintTextSelected = '';
 class DropdownButtonSelection extends StatefulWidget {
@@ -275,7 +276,17 @@ class _SecondPageState extends State<SecondPage> {
       binaryString = _controllerBDC.text;
       result = await convertHexTo2sComplement(binaryString);
     }
-    
+    //baseN to Dec
+    else if(_selection == "baseN to Dec") 
+    {
+      binaryString = _controllerBDC.text;
+      result = await baseToDecimalConversion(binaryString);
+    }
+    else if(_selection == "Dec to baseN") 
+    {
+      binaryString = _controllerBDC.text;
+      result = await convertDecimalToBaseNGivenDec(binaryString);
+    }
     else{
       //hintTextSelected = 'error default to BDC';
       binaryString = _controllerBDC.text;
@@ -322,8 +333,14 @@ class _SecondPageState extends State<SecondPage> {
                     case 'dec to 2complements':
                     hintTextSelected = 'Enter dec(limited to 32bits)';
                     break;
-                    case 'Hex to 2complements':
+                    case 'hex to 2complements':
                     hintTextSelected = 'Enter hex(limited to 32bits)';
+                    break;
+                    case 'baseN to Dec':
+                    hintTextSelected = 'number,baseN (e.g. 101,2 or E,16)';
+                    break;
+                    case 'Dec to baseN':
+                    hintTextSelected = 'dec,desired baseN (e.g. 8,2 to get 1000)';
                     break;
                     default:
                       hintTextSelected = ''; 
@@ -385,24 +402,157 @@ class ThirdPage extends StatefulWidget {
 }
 
 class _ThirdPageState extends State<ThirdPage> {
+  String dropdownValue = 'x is unknown';
+  TextEditingController _controllerA = TextEditingController();
+  TextEditingController _controllerBaseA = TextEditingController();
+  TextEditingController _controllerB = TextEditingController();
+  TextEditingController _controllerBaseB = TextEditingController();
+  TextEditingController _controllerZ = TextEditingController(); // Added TextField for Z
+  List _result = ['',''];
+  void _convert() async {
+      SystemChrome.setPreferredOrientations([
+            DeviceOrientation.portraitUp,
+                  DeviceOrientation.landscapeLeft,
+
+
+    ]);
+    List result = ['',''];
+    String A = '';
+    String B = '';
+    String Z = '';
+    String x = '';
+    String y = '';
+    if(dropdownValue == "x is unknown"){
+      A = _controllerA.text;
+      B = _controllerB.text;
+      Z = _controllerZ.text;
+      y = _controllerBaseB.text;
+      x = _controllerBaseA.text;
+      result = calculateUnknownX(A,B,y,Z);
+    }
+    else if(dropdownValue == "A is unknown")
+    {
+      A = _controllerA.text;
+      B = _controllerB.text;
+      Z = _controllerZ.text;
+      y = _controllerBaseB.text;
+      x = _controllerBaseA.text;
+      //hintTextSelected = 'Enter decimal';
+      result = calculateUnknownA(B,y,Z,x);
+    }
+    else{
+      //hintTextSelected = 'error default to BDC';
+      A = _controllerA.text;
+      B = _controllerB.text;
+      Z = _controllerZ.text;
+      y = _controllerBaseB.text;
+      x = _controllerBaseA.text;
+      result = calculateUnknownX(A,B,y,Z);
+    }
+
+    setState(() {
+      _result = result;
+    });
+  }  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Third Page'),
+        title: Text('A_x + B_y = Z Solver'),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Navigate back to the first page using a named route
-            Navigator.pop(context);
-          },
-          child: Text('Go Back to Main Menu'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            DropdownButton<String>(
+              value: dropdownValue,
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownValue = newValue!;
+                });
+              },
+              items: <String>['x is unknown', 'A is unknown']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            TextField(
+              controller: _controllerA,
+              decoration: InputDecoration(
+                hintText: 'A',
+              ),
+            ),
+            TextField(
+              controller: _controllerBaseA,
+              decoration: InputDecoration(
+                hintText: 'x:Base of A',
+              ),
+            ),
+            TextField(
+              controller: _controllerB,
+              decoration: InputDecoration(
+                hintText: 'B',
+              ),
+            ),
+            TextField(
+              controller: _controllerBaseB,
+              decoration: InputDecoration(
+                hintText: 'y:Base of B',
+              ),
+            ),
+            TextField(
+              controller: _controllerZ, // Added TextField for Z
+              decoration: InputDecoration(
+                hintText: 'Z', // Hint text for Z
+              ),
+            ),
+            ElevatedButton(
+              onPressed:_convert,
+              child: Text('Find Unknown'),
+            ),
+            TeXView(
+              renderingEngine: const TeXViewRenderingEngine.katex(),
+              child:  TeXViewDocument(_result[0]),
+              //_result,
+              //style: TextStyle(fontSize: 20),
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+                child: Row(children: [
+                  Padding(padding:  EdgeInsets.all(8.0),
+                  child: Math.tex(_result[0],textScaleFactor: 4.0,)
+                  ),
+                
+                ],),
+                      
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+                child: Row(children: [
+                  Padding(padding:  EdgeInsets.all(8.0),
+                  child: Math.tex(_result[1],textScaleFactor: 4.0,)
+                  ),
+                
+                ],),
+                      
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Navigate back to the first page using a named route
+                Navigator.pop(context);
+              },
+              child: Text('Return to Main Menu'),
+            ),
+          ],
         ),
       ),
     );
   }
 }
+
 
 class FourthPage extends StatelessWidget {
   @override
