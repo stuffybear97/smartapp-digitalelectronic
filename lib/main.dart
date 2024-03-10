@@ -25,9 +25,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => FirstPage(),
-        '/second': (context) => SecondPage(),
-        '/third': (context) => ThirdPage(),
+        '/': (context) => MainMenu(),
+        '/NumbSysConversion': (context) => NumbSysConversion(),
+        '/NumberSystemBaseN': (context) => NumberSystemBaseN(),
         '/fourth': (context) => FourthPage(),
         '/fifth': (context) => FifthPage(),
         '/LaTex test': (context) => TeXViewDocumentExamples(),
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class FirstPage extends StatelessWidget {
+class MainMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,16 +54,16 @@ class FirstPage extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               // Navigate to the second page using a named route
-              Navigator.pushNamed(context, '/second');
+              Navigator.pushNamed(context, '/NumbSysConversion');
             },
-            child: Text('Go to basic number system'),
+            child: Text('number system conversion'),
           ),
           ElevatedButton(
             onPressed: () {
               // Navigate to the third page using a named route
-              Navigator.pushNamed(context, '/third');
+              Navigator.pushNamed(context, '/NumberSystemBaseN');
             },
-            child: Text('Go to intermidiet number system'),
+            child: Text('Base N addition'),
           ),
           ElevatedButton(
             onPressed: () {
@@ -168,9 +168,9 @@ class FirstPage extends StatelessWidget {
   }
 } */
 
-class SecondPage extends StatefulWidget {
+class NumbSysConversion extends StatefulWidget {
   @override
-  _SecondPageState createState() => _SecondPageState();
+  _NumbSysConversionState createState() => _NumbSysConversionState();
 }
 const List<String> list = <String>['Binary to Dec', 'Dec to Binary', 'Dec to Hex', 'Hex to Dex'
 ,'Hex to Binary','Binary to Hex','dec to 2complements','hex to 2complements','baseN to Dec','Dec to baseN'];
@@ -223,7 +223,7 @@ class NumSysSelection {
   const NumSysSelection(this.selected);
   final String selected;
 } 
-class _SecondPageState extends State<SecondPage> {
+class _NumbSysConversionState extends State<NumbSysConversion> {
   final TextEditingController _controllerBDC = TextEditingController();
   String _result = '';
 
@@ -396,12 +396,12 @@ class _SecondPageState extends State<SecondPage> {
   }
 }
 
-class ThirdPage extends StatefulWidget {
+class NumberSystemBaseN extends StatefulWidget {
   @override
-  _ThirdPageState createState() => _ThirdPageState();
+  _NumberSystemBaseNState createState() => _NumberSystemBaseNState();
 }
 
-class _ThirdPageState extends State<ThirdPage> {
+class _NumberSystemBaseNState extends State<NumberSystemBaseN> {
   String dropdownValue = 'x is unknown';
   TextEditingController _controllerA = TextEditingController();
   TextEditingController _controllerBaseA = TextEditingController();
@@ -554,6 +554,7 @@ class _ThirdPageState extends State<ThirdPage> {
 }
 
 
+
 class FourthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -573,6 +574,8 @@ class FourthPage extends StatelessWidget {
     );
   }
 }
+
+//Tex codes for reference, to remove later
 
 class FifthPage extends StatelessWidget {
 
