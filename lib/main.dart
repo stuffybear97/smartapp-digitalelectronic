@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'calculations/number_system_functions.dart';
+import 'calculations/kmap.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_tex/flutter_tex.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => MainMenu(),
         '/NumbSysConversion': (context) => NumbSysConversion(),
         '/NumberSystemBaseN': (context) => NumberSystemBaseN(),
-        '/fourth': (context) => FourthPage(),
+        '/fourth': (context) => Kmap(),
         '/fifth': (context) => FifthPage(),
         '/LaTex test': (context) => TeXViewDocumentExamples(),
         '/MathTest': (context) => MathExample()
@@ -70,7 +71,7 @@ class MainMenu extends StatelessWidget {
               // Navigate to the fourth page using a named route
               Navigator.pushNamed(context, '/fourth');
             },
-            child: Text('Go to expert number system'),
+            child: Text('kMap'),
           ),
           ElevatedButton(
             onPressed: () {
@@ -553,14 +554,17 @@ class _NumberSystemBaseNState extends State<NumberSystemBaseN> {
   }
 }
 
+/* class Kmap extends StatefulWidget {
+  @override
+  _KmapState createState() => _KmapState();
+}
 
-
-class FourthPage extends StatelessWidget {
+class _KmapState extends State<Kmap> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fourth Page'),
+        title: Text('Kmap'),
       ),
       body: Center(
         child: ElevatedButton(
@@ -574,6 +578,116 @@ class FourthPage extends StatelessWidget {
     );
   }
 }
+ */
+
+class Kmap extends StatefulWidget {
+  @override
+  _KmapState createState() => _KmapState();
+}
+
+class _KmapState extends State<Kmap> {
+  int numVariables = 2;
+  List<List<bool>> kMap = List.generate(2, (_) => List.generate(2, (_) => false));
+  String result = '';
+
+  void updateKMap() {
+    int numRows = 1 << (numVariables ~/ 2);
+    int numCols = 1 << (numVariables -numVariables ~/ 2);
+    setState(() {
+      kMap = List.generate(numRows, (_) => List.generate(numCols, (_) => false));
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Kmap'),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+
+            SizedBox(height: 20),
+            Text('Number of Variables: $numVariables'),
+            Slider(
+              value: numVariables.toDouble(),
+              min: 1,
+              max: 4,
+              divisions: 3,
+              onChanged: (value) {
+                setState(() {
+                  numVariables = value.toInt();
+                  updateKMap();
+                });
+              },
+            ),
+            SizedBox(height: 20),
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height - 300,
+            ),
+            child: GridView.builder(
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: kMap[0].length,
+              ),
+              itemCount: kMap.length * kMap[0].length,
+              itemBuilder: (BuildContext context, int index) {
+                final row = index ~/ kMap[0].length;
+                final col = index % kMap[0].length;
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      kMap[row][col] = !kMap[row][col];
+                    });
+                  },
+                  child: Container(
+                    color: kMap[row][col] ? Colors.blue : Colors.white,
+                    child: Center(
+                      child: Text(
+                        kMap[row][col] ? '1' : '0',
+                        style: TextStyle(fontSize: 24),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          SizedBox(height: 20),
+
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  result = solveKMap(kMap,numVariables);
+                });
+              },
+              child: Text('Solve K-Map'),
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Result: $result',
+              style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Go Back to Main Menu'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
 
 //Tex codes for reference, to remove later
 
@@ -792,66 +906,3 @@ class TeXViewDocumentExamples extends StatelessWidget {
   }
 }
 
-/* class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return  MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("test"),
-          centerTitle: true,
-          backgroundColor: const Color.fromRGBO(255, 0, 0, 50),
-        ),
-        body: Row(
-          children: [
-            Text(testText),
-            TextButton(onPressed: (){
-              // Navigate to the second page
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const NumberConverter()),
-            );
-            }, 
-            child: const Text('Hello World'))
-          ],
-
-            
-        
-        ),
-        
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            
-           },
-          child: const Text("test"),
-
-        ),
-      ),
-    );
-  }
-}
-
-class NumberConverter extends StatelessWidget {
-  const NumberConverter({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Second Route'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-            // Navigate back to first route when tapped.
-          },
-          child: const Text('Go back!'),
-        ),
-      ),
-    );
-  }
-}
- */
