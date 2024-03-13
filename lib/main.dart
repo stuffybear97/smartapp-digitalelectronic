@@ -598,6 +598,8 @@ class _KmapState extends State<Kmap> {
   int numVariables = 4;
   List<List<bool>> kMap = List.generate(4, (_) => List.generate(4, (_) => false));
   String result = '';
+  String _result = '';
+  String labelkmap = "AB    00 01 11 10 \nCD 00 [] [] [] []\n   01   [] [] [] []\n   11   [] [] [] []\n   10   [] [] [] []";
 
   void updateKMap() {
     int numRows = 1 << (numVariables ~/ 2);
@@ -628,11 +630,24 @@ class _KmapState extends State<Kmap> {
               onChanged: (value) {
                 setState(() {
                   numVariables = value.toInt();
+                  switch(numVariables){
+                    case 3:
+                    labelkmap = "AB   00 01 11 10 \nC  0   [  ] [  ] [  ] [  ]\n    1   [  ] [  ] [  ] [  ]";
+                    break;
+                    case 4:
+                    labelkmap ="AB    00 01 11 10 \nCD 00 [] [] [] []\n   01   [] [] [] []\n   11   [] [] [] []\n   10   [] [] [] []";
+                    break;
+                    default:
+                    break;
+                  }
                   updateKMap();
                 });
               },
             ),
             SizedBox(height: 20),
+          SizedBox(height: 20),
+          Text(labelkmap),
+          
           ConstrainedBox(
             constraints: BoxConstraints(
               maxHeight: MediaQuery.of(context).size.height - 300,
@@ -674,6 +689,7 @@ class _KmapState extends State<Kmap> {
                   onPressed: () {
                         setState(() {
                           result = solveKMapMinTerms(kMap,numVariables);
+                          _result = solveKMapMinTermsMathTex(kMap, numVariables);
                         });
                       },
                   ),
@@ -682,9 +698,14 @@ class _KmapState extends State<Kmap> {
                   onPressed: (){
                     setState(() {
                       result = solveKMapMaxTerm(kMap, numVariables);
+                      _result = solveKMapMaxTermMathTex(kMap, numVariables);
                     });
 
                   },
+                  ),
+                  ElevatedButton(
+                  child: Text("solve"),
+                  onPressed: null,
                   ),
               ],
 
@@ -696,6 +717,16 @@ class _KmapState extends State<Kmap> {
             Text(
               'Result: $result',
               style: TextStyle(fontSize: 18),
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+                child: Row(children: [
+                  Padding(padding:  EdgeInsets.all(8.0),
+                  child: Math.tex(_result,textScaleFactor: 4.0,)
+                  ),
+                
+                ],),
+                      
             ),
             SizedBox(height: 20),
             ElevatedButton(
