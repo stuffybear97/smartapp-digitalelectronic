@@ -302,6 +302,7 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(
         title: Text('number system easy'),
       ),
@@ -364,14 +365,20 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
               _convert, 
             ),
             SizedBox(height: 20),
-            
-            TeXView(
+            ConstrainedBox(constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height - 300,
+            ),
+            child: TeXView(
               renderingEngine: const TeXViewRenderingEngine.katex(),
               child:  TeXViewDocument(_result),
               //_result,
               //style: TextStyle(fontSize: 20),
             ),
-            SingleChildScrollView(
+            ),
+            ConstrainedBox(constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height - 300,
+            ),
+            child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
                 child: Row(children: [
                   Padding(padding:  EdgeInsets.all(8.0),
@@ -381,6 +388,8 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
                 ],),
                       
             ),
+            ),
+            
 
             ElevatedButton(
               onPressed: () {
@@ -586,8 +595,8 @@ class Kmap extends StatefulWidget {
 }
 
 class _KmapState extends State<Kmap> {
-  int numVariables = 2;
-  List<List<bool>> kMap = List.generate(2, (_) => List.generate(2, (_) => false));
+  int numVariables = 4;
+  List<List<bool>> kMap = List.generate(4, (_) => List.generate(4, (_) => false));
   String result = '';
 
   void updateKMap() {
@@ -613,7 +622,7 @@ class _KmapState extends State<Kmap> {
             Text('Number of Variables: $numVariables'),
             Slider(
               value: numVariables.toDouble(),
-              min: 1,
+              min: 3,
               max: 4,
               divisions: 3,
               onChanged: (value) {
@@ -656,16 +665,33 @@ class _KmapState extends State<Kmap> {
               },
             ),
           ),
-          SizedBox(height: 20),
 
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  result = solveKMap(kMap,numVariables);
-                });
-              },
-              child: Text('Solve K-Map'),
+          Container(
+            child: Row(
+              children: <Widget>[
+                 ElevatedButton(
+                  child:  Text("give minterms"),
+                  onPressed: () {
+                        setState(() {
+                          result = solveKMapMinTerms(kMap,numVariables);
+                        });
+                      },
+                  ),
+                ElevatedButton(
+                  child: Text("give maxterms"),
+                  onPressed: (){
+                    setState(() {
+                      result = solveKMapMaxTerm(kMap, numVariables);
+                    });
+
+                  },
+                  ),
+              ],
+
             ),
+          ),
+          
+
             SizedBox(height: 20),
             Text(
               'Result: $result',

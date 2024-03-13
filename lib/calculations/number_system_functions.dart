@@ -435,24 +435,31 @@ List<String> calculateUnknownA(String B, String y, String Z, String x) {
 
 
 String baseToDecimalConversion(String value_baseN) {
-  List<String> parts = value_baseN.split(',');
-  String baseNValue = parts[0];
-  int baseN = int.parse(parts[1]);
-  String steps = "Step-by-step working:\n";
-  int decimal = 0;
-      // Process each digit from right to left
-    for (int i = 0; i < baseNValue.length; i++) {
-      int digitValue = getDecimalValueFromHexDigit(baseNValue[baseNValue.length - i - 1]);
-      num positionValue = digitValue * pow(baseN, i); // Equivalent to pow(16, i)
-      decimal += int.parse(positionValue.toString());
-      
-      steps += "${baseNValue[baseNValue.length - i - 1]} (hex) => $digitValue * 16^$i = $positionValue\n";
-    }
+  try{
+    List<String> parts = value_baseN.split(',');
+      String baseNValue = parts[0];
+      int baseN = int.parse(parts[1]);
+      String steps = "Step-by-step working:\n";
+      int decimal = 0;
+          // Process each digit from right to left
+        for (int i = 0; i < baseNValue.length; i++) {
+          int digitValue = getDecimalValueFromHexDigit(baseNValue[baseNValue.length - i - 1]);
+          num positionValue = digitValue * pow(baseN, i); // Equivalent to pow(16, i)
+          decimal += int.parse(positionValue.toString());
+          
+          steps += "${baseNValue[baseNValue.length - i - 1]} (hex) => $digitValue * 16^$i = $positionValue\n";
+        }
 
-  steps += "Sum of all position values = $decimal (decimal)";
-  String result = "Decimal: $decimal\n\n$steps";
-  //int decimalValue = int.parse(parts[0], radix: int.parse(parts[1]));
-  return result;
+      steps += "Sum of all position values = $decimal (decimal)";
+      String result = "Decimal: $decimal\n\n$steps";
+      //int decimalValue = int.parse(parts[0], radix: int.parse(parts[1]));
+      return result;
+  }
+  catch(e)
+  {
+    return "error";
+  }
+  
 }
 
 
