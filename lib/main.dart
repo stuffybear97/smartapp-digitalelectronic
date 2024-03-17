@@ -32,8 +32,9 @@ class MyApp extends StatelessWidget {
         '/fourth': (context) => Kmap(),
         '/fifth': (context) => FifthPage(),
         '/LaTex test': (context) => TeXViewDocumentExamples(),
-        '/MathTest': (context) => MathExample()
+        '/MathTest': (context) => MathExample(),
         //Math.tex(r'\frac a b', mathStyle: MathStyle.text)
+        '/newBaseNSolver':  (context) => newBaseNSolver()
 
         
       },
@@ -66,6 +67,14 @@ class MainMenu extends StatelessWidget {
             },
             child: Text('Base N addition'),
           ),
+                    ElevatedButton(
+            onPressed: () {
+              // Navigate to the third page using a named route
+              Navigator.pushNamed(context, '/newBaseNSolver');
+            },
+            child: Text('new base N solver'),
+          ),
+
           ElevatedButton(
             onPressed: () {
               // Navigate to the fourth page using a named route
@@ -102,59 +111,26 @@ class MainMenu extends StatelessWidget {
   }
 }
 
-/* class SecondPage extends StatefulWidget {
 
-/* class _SecondPageState extends State<SecondPage> {
-  String decimalValue = '';
-  String binaryValue = '';
-  late Future<String>  binaryPlaceholder;
-  binaryPlaceholder = convertBinaryToDecimal(decimalValue);
-  setState((){
-  binaryValue = convertBinaryToDecimal(decimalValue)
-  }); */
-  /* void convertBinaryToDecimal() {
-    try {
-      int decimal = int.parse(binaryValue, radix: 2);
-      setState(() {
-        decimalValue = decimal.toString();
-      });
-    } catch (e) {
-      setState(() {
-        decimalValue = 'Invalid Input';
-      });
-    } */
+
+
+class newBaseNSolver extends StatefulWidget {
+  @override
+  _newBaseNSolverState createState() => _newBaseNSolverState();
+}
+
+class _newBaseNSolverState extends State<newBaseNSolver> {
   
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Binary to Decimal Converter'),
+        title: Text('new Base N Solver'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              onChanged: (value) {
-                
-                  binaryValue = value;
-                
-              },
-              decoration: InputDecoration(labelText: 'Enter Binary Number'),
-              keyboardType: TextInputType.number,
-            ),
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                convertBinaryToDecimal();
-              },
-              child: Text('Convert'),
-            ),
-            SizedBox(height: 16),
-            Text('Decimal Value: $decimalValue'),
-            Spacer(),
             ElevatedButton(
               onPressed: () {
                 // Navigate back to the first page using a named route
@@ -167,7 +143,9 @@ class MainMenu extends StatelessWidget {
       ),
     );
   }
-} */
+}
+
+
 
 class NumbSysConversion extends StatefulWidget {
   @override
