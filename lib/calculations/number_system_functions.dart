@@ -531,3 +531,255 @@ String getHexDigit(int remainder) {
   }
 }
  */
+
+
+
+List<String> calculateUnknownX_add(String A, String B, String y, String Z) {
+  try{
+    String explanation = '';
+    int A_Base10 = 0;
+    int y_value = int.parse(y);
+    int Z_value = int.parse(Z);
+    int B_value = baseToDecimalConversionFunc(B,y_value);
+    int x = 0;
+    A_Base10 = Z_value - B_value;
+    String A_Basei = '';
+    explanation += "1. Solve for x:\n";
+    explanation += "A in base 10 = $Z_value - $B_value = $A_Base10\n";
+    explanation += "find the base by trail and error starting from the largest value of A_x + 1 and convert to check with A_base10";
+    // Step 3: Return answer and working explanation
+    return [A + " convert to decimal incement the base and compaore to its decimal value: " + A_Base10.toString(),explanation];
+  }
+  catch(E){
+    return ['Error: Invalid input.','Error: Invalid input.'];
+  }
+  
+  
+}
+
+// Function to solve for A in A_x + B_y = Z
+List<String> calculateUnknownA_add(String B, String y, String Z, String x) {
+  try{
+    String explanation = '';
+    int x_value = int.parse(x);
+    int y_value = int.parse(y);
+    int Z_value = int.parse(Z);
+    int B_value = baseToDecimalConversionFunc(B, y_value);
+
+    // Step 1: Solve for A
+    int A = 0;
+    //for A in base 10
+    A = Z_value - B_value;
+    String A_x = A.toRadixString(x_value);
+
+    explanation += "Solve for A: A_"+x+" = "+Z+"_10 - "+B+"_"+y+"\n";
+
+    explanation += " A in base 10 = $Z_value - $B_value = $A \n";
+
+    explanation += "A in base $x = $A_x\n";
+
+ 
+
+    // Return answer and working explanation
+    return [A_x.toString(),explanation];
+  }
+  catch(E){
+    return ['Error: Invalid input.','Error: Invalid input.'];
+  }
+  
+}
+
+// Function to solve for A in A_x - B_y = Z(base 10)
+List<String> calculateUnknownA_sub(String B, String y, String Z, String x) {
+  try{
+    String explanation = '';
+    int x_value = int.parse(x);
+    int y_value = int.parse(y);
+    int Z_value = int.parse(Z);
+    int B_value = baseToDecimalConversionFunc(B, y_value);
+
+    // Step 1: Solve for A
+    int A = 0;
+    //for A in base 10
+    A = Z_value + B_value;
+    String A_x = A.toRadixString(x_value);
+    //for A value in base x
+    explanation += "Solve for A: A_"+x+" = "+Z+"_10 + "+B+"_"+y+"\n";
+    explanation += " A in base 10 = $Z_value + $B_value = $A \n";
+    explanation += "A in base $x = $A_x\n";
+
+    //A = Z_value
+    // Step 2: Generate working explanation
+    
+
+    // Step 3: Return answer and working explanation
+    return [A_x.toString(),explanation];
+  }
+  catch(E){
+    return ['Error: Invalid input.','Error: Invalid input.'];
+  }
+  
+}
+
+// Function to solve for x which is the base of A,  in A_x - B_y = Z(base 10)
+List<String> calculateUnknownX_sub(String A, String B, String y, String Z) {
+  try{
+    String explanation = '';
+    int A_Base10 = 0;
+    int y_value = int.parse(y);
+    int Z_value = int.parse(Z);
+    int B_value = baseToDecimalConversionFunc(B,y_value);
+    int x = 0;
+    A_Base10 = Z_value + B_value;
+    String A_Basei = '';
+    explanation += "1. Solve for x:\n";
+    explanation += "A in base 10 = $Z_value + $B_value = $A_Base10\n";
+    explanation += "find the base by trail and error starting from the largest value of A_x + 1 and convert to check with A_base10";
+    // Step 3: Return answer and working explanation
+    return [A + " convert to decimal incement the base and compaore to its decimal value: " + A_Base10.toString(),explanation];
+  }
+  catch(E){
+    return ['Error: Invalid input.','Error: Invalid input.'];
+  }
+  
+  
+}
+
+int baseToDecimalConversionFunc(String baseValue, int base) {
+  int decimalValue = 0;
+  for (int i = 0; i < baseValue.length; i++) {
+    int digitValue = int.parse(baseValue[i], radix: base);
+    decimalValue += (digitValue * pow(base, baseValue.length - i - 1)) as int;
+  }
+  return decimalValue;
+}
+
+String convertFromDecimalToBase(int decimalValue, int base) {
+  if (base < 2 || base > 36) {
+    throw ArgumentError('Base must be between 2 and 36');
+  }
+  return decimalValue.toRadixString(base);
+}
+
+// Function to solve for A in A_x * B_y = Z
+List<String> calculateUnknownA_mul(String B, String y, String Z, String x) {
+  try {
+    String explanation = '';
+    int x_value = int.parse(x);
+    int y_value = int.parse(y);
+    int Z_value = int.parse(Z);
+    int B_value = baseToDecimalConversionFunc(B, y_value);
+
+    // Step 1: Solve for A
+    int A = 0; // for A in base 10
+    if (B_value != 0) {
+      A = Z_value ~/ B_value;
+    } else {
+      throw Exception('Division by zero error: B cannot be zero.');
+    }
+    String A_x = convertFromDecimalToBase(A, x_value);
+
+    explanation += "Solve for A: A_$x * $B\_$y = $Z\_10\n";
+    explanation += " A in base 10 = $Z_value ÷ $B_value = $A\n";
+    explanation += "A in base $x = $A_x\n";
+
+    // Return answer and working explanation
+    return [A_x.toString(), explanation];
+  } catch (E) {
+    return ['Error: Invalid input.', 'Error: Invalid input.'];
+  }
+}
+
+// Function to solve for x which is the base of A, in A_x * B_y = Z
+List<String> calculateUnknownX_mul(String A, String B, String y, String Z) {
+  try {
+    String explanation = '';
+    int y_value = int.parse(y);
+    int Z_value = int.parse(Z);
+    int B_value = baseToDecimalConversionFunc(B, y_value);
+
+    // Step 1: Convert A to decimal (base 10)
+    int A_decimal = 0;
+    for (int x = 2; x <= 36; x++) {
+      try {
+        A_decimal = baseToDecimalConversionFunc(A, x);
+        if (A_decimal * B_value == Z_value) {
+          explanation += "Convert A to decimal (base 10):\n";
+          explanation += "Try base $x: $A\_$x = $A_decimal\_10\n";
+          explanation += "Multiply A_decimal and B_decimal: $A_decimal * $B_value = ${A_decimal * B_value}\n";
+          explanation += "Result matches Z_decimal ($Z_value), so x = $x\n";
+          return [x.toString(), explanation];
+        }
+      } catch (e) {
+        // Ignore invalid base conversion errors and continue the loop
+      }
+    }
+
+    // If no valid base is found
+    return ['No valid base found for A', 'No valid base found for A'];
+  } catch (E) {
+    return ['Error: Invalid input.', 'Error: Invalid input.'];
+  }
+}
+
+// Function to solve for A in A_x / B_y = Z
+// Function to solve for A in A_x / B_y = Z
+List<String> calculateUnknownA_divide(String B, String y, String Z, String x) {
+  try {
+    String explanation = '';
+    int x_value = int.parse(x);
+    int y_value = int.parse(y);
+    double Z_value = double.parse(Z);
+    int B_value = baseToDecimalConversionFunc(B, y_value);
+
+    // Step 1: Solve for A
+    double A = 0; // for A in base 10
+    if (B_value != 0) {
+      A = Z_value * B_value;
+    } else {
+      throw Exception('Division by zero error: B cannot be zero.');
+    }
+    String A_x = convertFromDecimalToBase(A.round(), x_value);
+
+    explanation += "Solve for A: A_$x / $B\_$y = $Z\_10\n";
+    explanation += " A in base 10 = $Z_value × $B_value = $A\n";
+    explanation += "A in base $x = $A_x\n";
+
+    // Return answer and working explanation
+    return [A_x.toString(), explanation];
+  } catch (E) {
+    return ['Error: Invalid input.', 'Error: Invalid input.'];
+  }
+}
+
+// Function to solve for x (base of A) in A_x / B_y = Z
+List<String> calculateUnknownX_divide(String A, String B, String y, String Z) {
+  try {
+    String explanation = '';
+    int y_value = int.parse(y);
+    double Z_value = double.parse(Z);
+    int B_value = baseToDecimalConversionFunc(B, y_value);
+
+    // Step 1: Convert A to decimal (base 10)
+    double A_decimal = 0;
+    for (int x = 2; x <= 36; x++) {
+      try {
+        A_decimal = baseToDecimalConversionFunc(A, x).toDouble();
+        if ((A_decimal / B_value).toStringAsFixed(5) == Z_value.toStringAsFixed(5)) {
+          explanation += "Convert A to decimal (base 10):\n";
+          explanation += "Try base $x: $A\_$x = $A_decimal\_10\n";
+          explanation += "Divide A_decimal by B_decimal: $A_decimal / $B_value = ${A_decimal / B_value}\n";
+          explanation += "Result matches Z_decimal ($Z_value), so x = $x\n";
+          return [x.toString(), explanation];
+        }
+      } catch (e) {
+        // Ignore invalid base conversion errors and continue the loop
+      }
+    }
+
+    // If no valid base is found
+    return ['No valid base found for A', 'No valid base found for A'];
+  } catch (E) {
+    return ['Error: Invalid input.', 'Error: Invalid input.'];
+  }
+}
