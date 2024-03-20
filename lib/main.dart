@@ -415,6 +415,7 @@ const List<String> list = <String>['Binary to Dec', 'Dec to Binary', 'Dec to Hex
 ,'Hex to Binary','Binary to Hex','dec to 2complements','hex to 2complements','baseN to Dec','Dec to baseN'];
 String _selection = 'Binary to Dec';
 String hintTextSelected = '';
+String baseNhintTextSelected = '';
 class DropdownButtonSelection extends StatefulWidget {
   //Add a callback function parameter to the constructor:
   final Function(String) onSelectionChanged;
@@ -463,7 +464,10 @@ class NumSysSelection {
   final String selected;
 } 
 class _NumbSysConversionState extends State<NumbSysConversion> {
-  final TextEditingController _controllerBDC = TextEditingController();
+  final TextEditingController  _controllerBDC= TextEditingController();
+  final TextEditingController _controllerBaseN = TextEditingController();
+  bool showBaseN = false;
+
   String _result = '';
 
   void _convert() async {
@@ -476,37 +480,44 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
     String result = '';
     String binaryString = '';
     if(_selection == "Binary to Dec"){
+      showBaseN = false;
       binaryString = _controllerBDC.text;
         //hintTextSelected = 'Enter binary';
       result = await convertBinaryToDecimal(binaryString);
     }
     else if(_selection == "Dec to Binary")
     {
+      showBaseN = false;
       binaryString = _controllerBDC.text;
       //hintTextSelected = 'Enter decimal';
       result = await convertDecimalToBinary(binaryString);
 
     }
     else if(_selection == "Dec to Hex") {
+      showBaseN = false;
       binaryString = _controllerBDC.text;
       //hintTextSelected = 'Enter decimal';
       result = await convertDecimalToHex(binaryString);
     }
     else if(_selection == "Hex to Dex") {
+      showBaseN = false;
       binaryString = _controllerBDC.text;
       //hintTextSelected = 'Enter Hex digits';
       result = await convertHexToDecimal(binaryString);
     }
     else if(_selection == "Hex to Binary") {
+      showBaseN = false;
       binaryString = _controllerBDC.text;
       //hintTextSelected = 'Enter Hex digits';
       result = await convertHexToBinary(binaryString);
     }else if(_selection == "Binary to Hex") {
+      showBaseN = false;
       binaryString = _controllerBDC.text;
       //hintTextSelected = 'Enter binary(limited to 32bits)';
       result = await convertBinaryToHex(binaryString);
 
     }else if(_selection == "dec to 2complements"){
+      
       binaryString = _controllerBDC.text;
       //hintTextSelected = 'Enter dec(limited to 32bits)';
       result = await convertDecimalTo2sComplement(binaryString);
@@ -519,12 +530,15 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
     else if(_selection == "baseN to Dec") 
     {
       binaryString = _controllerBDC.text;
-      result = await baseToDecimalConversion(binaryString);
+      binaryString = binaryString + ", " + _controllerBaseN.text;
+
+      result = await baseToDecimalConversion(_controllerBDC.text,_controllerBaseN.text);
     }
     else if(_selection == "Dec to baseN") 
     {
       binaryString = _controllerBDC.text;
-      result = await convertDecimalToBaseNGivenDec(binaryString);
+      binaryString = binaryString + ", " + _controllerBaseN.text;
+      result = await convertDecimalToBaseNGivenDec(_controllerBDC.text,_controllerBaseN.text);
     }
     else{
       //hintTextSelected = 'error default to BDC';
@@ -557,32 +571,44 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
                   switch (_selection) {
                     case 'Binary to Dec':
                       hintTextSelected = 'Enter binary';
+                      showBaseN = false;
                       break;
                     case 'Dec to Binary':
                       hintTextSelected = 'Enter decimal';
+                      showBaseN = false;
                       break;
                     case 'Dec to Hex':
                       hintTextSelected = 'Enter decimal';
+                      showBaseN = false;
                       break;
                     case 'Hex to Binary':
                       hintTextSelected = 'Enter hex';
+                      showBaseN = false;
                       break;
                     case 'Binary to Hex':
                       hintTextSelected = 'Enter binary(limited to 32bits)';
+                      showBaseN = false;
                       break;
                     case 'dec to 2complements':
                     hintTextSelected = 'Enter dec(limited to 32bits)';
+                    showBaseN = false;
                     break;
                     case 'hex to 2complements':
                     hintTextSelected = 'Enter hex(limited to 32bits)';
+                    showBaseN = false;
                     break;
                     case 'baseN to Dec':
+                    showBaseN = true;
                     hintTextSelected = 'number,baseN (e.g. 101,2 or E,16)';
+                    baseNhintTextSelected = 'baseN (e.g. if num is 101, input 2 or E,input 16)';
                     break;
                     case 'Dec to baseN':
-                    hintTextSelected = 'dec,desired baseN (e.g. 8,2 to get 1000)';
+                    showBaseN = true;
+                    hintTextSelected = 'dec';
+                    baseNhintTextSelected = 'desired baseN (e.g. if 8,input 2 to get 1000)';
                     break;
                     default:
+                    showBaseN = false;
                       hintTextSelected = ''; 
                   }
                 });
@@ -596,6 +622,15 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
               ),
               //keyboardType: TextInputType.number,
             ),
+            showBaseN? TextField(
+              controller: _controllerBaseN,
+              decoration: InputDecoration(
+                hintText: baseNhintTextSelected,
+              ),
+
+            ):
+            Container(),
+
             SizedBox(height: 20),
             TextButton(
               child: Text('Convert'),

@@ -434,9 +434,9 @@ List<String> calculateUnknownA(String B, String y, String Z, String x) {
 }
 
 
-String baseToDecimalConversion(String value_baseN) {
+String baseToDecimalConversion(String dec, String BaseN) {
   try{
-    List<String> parts = value_baseN.split(',');
+    List<String> parts = [dec, BaseN];
       String baseNValue = parts[0];
       int baseN = int.parse(parts[1]);
       String steps = "Step-by-step working:\n";
@@ -464,9 +464,9 @@ String baseToDecimalConversion(String value_baseN) {
 
 
 //Conver Dec to BaseN
-String convertDecimalToBaseNGivenDec (String decBaseN)  {
+String convertDecimalToBaseNGivenDec (String dec, String BaseN)  {
   try{
-  List<String> parts = decBaseN.split(',');
+  List<String> parts = [dec, BaseN];
   String DecValue = parts[0];
   int decimal = int.parse(DecValue);
   String DesiredBaseN = parts[1];
