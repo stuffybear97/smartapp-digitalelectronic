@@ -548,7 +548,7 @@ List<String> calculateUnknownX_add(String A, String B, String y, String Z) {
     explanation += "A in base 10 = $Z_value - $B_value = $A_Base10\n";
     explanation += "find the base by trail and error starting from the largest value of A_x + 1 and convert to check with A_base10";
     // Step 3: Return answer and working explanation
-    return [A + " convert to decimal incement the base and compaore to its decimal value: " + A_Base10.toString(),explanation];
+    return [A.toUpperCase() + " convert to decimal incement the base and compaore to its decimal value: " + A_Base10.toString(),explanation];
   }
   catch(E){
     return ['Error: Invalid input.','Error: Invalid input.'];
@@ -581,7 +581,7 @@ List<String> calculateUnknownA_add(String B, String y, String Z, String x) {
  
 
     // Return answer and working explanation
-    return [A_x.toString(),explanation];
+    return [A_x.toString().toUpperCase(),explanation];
   }
   catch(E){
     return ['Error: Invalid input.','Error: Invalid input.'];
