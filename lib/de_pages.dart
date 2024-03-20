@@ -283,7 +283,7 @@ class _newBaseNSolverStatePG2 extends State<newBaseNSolverPG2> {
               scrollDirection: Axis.horizontal,
                 child: Row(children: [
                   Padding(padding:  EdgeInsets.all(8.0),
-                  child: Math.tex(_result[0]+_result[1],textScaleFactor: 4.0,)
+                  child: Math.tex(_result[0]+_result[1],textScaleFactor: 1.0,)
                   ),
                 
                 ],),
@@ -298,7 +298,7 @@ class _newBaseNSolverStatePG2 extends State<newBaseNSolverPG2> {
               ),
               child: TeXView(
                 renderingEngine: const TeXViewRenderingEngine.katex(),
-                child: TeXViewDocument(_result[1]),
+                child: TeXViewDocument(_result[0]+_result[1]),
               ),
             ),
             
@@ -461,12 +461,12 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
       _result = result;
     });
   }  
-
+  List<String> arithmeticItems = ['+', '-', '*', '/'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('new Base N Solver'),
+        title: Text('Base N Solver'),
       ),
       body: Center(
 
@@ -516,7 +516,7 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
                 ),
                 //drowpdown for selection of + or - or * or /
                 DropdownButton<String>(
-                  value: '+',
+                  value: dropdownValueArithmetic,
                   onChanged: (String? newValue) {
                     setState(() {
                       dropdownValueArithmetic = newValue!;

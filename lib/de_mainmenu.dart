@@ -38,7 +38,7 @@ class de_mainmenu extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               // Navigate to the third page using a named route
-              Navigator.pushNamed(context, '/newBaseNSolverPage2');
+              Navigator.pushNamed(context, '/newBaseNSolver');
             },
             child: Text('Base N solver + - * /'),
           ),
