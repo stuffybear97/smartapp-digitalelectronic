@@ -648,7 +648,24 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
               //style: TextStyle(fontSize: 20),
             ),
             ),
-            ConstrainedBox(constraints: BoxConstraints(
+            SingleChildScrollView(
+                  physics: BouncingScrollPhysics(), // Adds a bounce effect on iOS, scroll glow on Android
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      // Set a minimum height for the content if necessary. Adjust this value based on your needs.
+                      // This ensures the box takes up at least a certain size but can grow with the content.
+                      minHeight: MediaQuery.of(context).size.height - 300,
+                    ),
+                    child: IntrinsicHeight(
+                      child: TeXView(
+                        renderingEngine: const TeXViewRenderingEngine.katex(),
+                        child: TeXViewDocument(_result),
+                      ),
+                    ),
+                  ),
+
+            ),
+/*             ConstrainedBox(constraints: BoxConstraints(
               maxHeight: MediaQuery.of(context).size.height - 300,
             ),
             child: SingleChildScrollView(
@@ -662,7 +679,7 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
                       
             ),
             ),
-            
+             */
 
             ElevatedButton(
               onPressed: () {
