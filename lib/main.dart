@@ -64,56 +64,13 @@ class MainMenu extends StatelessWidget {
             },
             child: Text('to De Main Menu'),
           ),
-          ElevatedButton(
-            onPressed: () {
-              // Navigate to the second page using a named route
-              Navigator.pushNamed(context, '/NumbSysConversion');
-            },
-            child: Text('number system conversion'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              // Navigate to the third page using a named route
-              Navigator.pushNamed(context, '/newBaseNSolverPage2');
-            },
-            child: Text('Base N addition page2'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              // Navigate to the third page using a named route
-              Navigator.pushNamed(context, '/newBaseNSolver');
-            },
-            child: Text('new base N solver'),
-          ),
           
-          ElevatedButton(
-            onPressed: () {
-              // Navigate to the fourth page using a named route
-              Navigator.pushNamed(context, '/fourth');
-            },
-            child: Text('kMap'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              // Navigate to the fourth page using a named route
-              Navigator.pushNamed(context, '/LaTex test');
-            },
-            child: Text('laTex example'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              // Navigate to the fourth page using a named route
-              Navigator.pushNamed(context, '/fifth');
-            },
-            child: Text('Go to fifht Page'),
-            
-          ),
           ElevatedButton(
             onPressed: () {
               // Navigate to the fourth page using a named route
               Navigator.pushNamed(context, '/MathTest');
             },
-            child: Text('go to math example'),
+            child: Text('go to math example (for testing purpose)'),
             
           ),
         ],

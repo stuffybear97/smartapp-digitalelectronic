@@ -20,17 +20,17 @@ Future<String> convertBinaryToDecimal(String binaryValue) async {
       int check1or0;
       if(i==0) {
         check1or0 = int.parse(digits[i], radix: 2);
-        stepsToSolve = "$stepsToSolve\n$check1or0* \ 2^$power \ ";
+        stepsToSolve = "$stepsToSolve~$check1or0* ~\~ 2^$power~ \ ";
 
       }
       else{
         check1or0 = int.parse(digits[i], radix: 2);
        
-        stepsToSolve = stepsToSolve + "\n +" + check1or0.toString() + "* 2^" + power.toString();
+        stepsToSolve = stepsToSolve + "~~+" + check1or0.toString() + "~*~ 2^" + power.toString();
       }
       power = power - 1;
           }
-    return   "\n" +stepsToSolve + " = " + decimal.toString();
+    return   "~" +stepsToSolve + "~=~" + decimal.toString();
   } catch (e) {
     return 'Invalid Input';
   }
@@ -40,7 +40,7 @@ Future<String> convertDecimalToBinary(String decimalValue) async {
     try {
     int decimal = int.parse(decimalValue);
     if (decimal == 0) {
-      return "0\n\nDecimal 0 in binary is 0.";
+      return "0\n\n~Decimal~ 0 ~in~ binary~ is~ 0.";
     }
 
     String binary = "";
@@ -49,7 +49,7 @@ Future<String> convertDecimalToBinary(String decimalValue) async {
     while (decimal > 0) {
       int remainder = decimal % 2;
       binary = remainder.toString() + binary;
-      steps += "Decimal:$decimal/2 = Q: ${decimal ~/ 2}, R:$remainder(binary digit).\n";
+      steps += "Decimal:$decimal/2 ~=~ Q:~ ${decimal ~/ 2},~ R:$remainder(binary~ digit).~\n";
       decimal = decimal ~/ 2;
     }
 
@@ -66,17 +66,17 @@ Future<String> convertDecimalToHex(String decimalValue) async {
   try {
     int decimal = int.parse(decimalValue);
     if (decimal == 0) {
-      return "0\n\nDecimal 0 in hexadecimal is 0.";
+      return "0~Decimal~0~in~hexadecimal~is~0.";
     }
 
     String hexa = "";
-    String steps = "working:\n";
+    String steps = "working:~";
     
     while (decimal > 0) {
       int remainder = decimal % 16;
       String hexDigit = getHexDigit(remainder);
       hexa = hexDigit + hexa;
-      steps += "Decimal: $decimal/16 = Q: ${decimal ~/ 16}, R: $remainder (becomes $hexDigit in hex)\n";
+      steps += "Decimal:~$decimal/16~=~Q:~${decimal ~/ 16},~R:~$remainder~(becomes~$hexDigit~in~hex)~";
       decimal = decimal ~/ 16;
     }
 
@@ -100,7 +100,7 @@ String getHexDigit(int remainder) {
 Future<String> convertHexToDecimal(String hexValue) async {
   try {
     int decimal = 0;
-    String steps = "Step-by-step working:\n";
+    String steps = "Step-by-step~working:~";
 
     // Process each digit from right to left
     for (int i = 0; i < hexValue.length; i++) {
@@ -108,12 +108,12 @@ Future<String> convertHexToDecimal(String hexValue) async {
       int positionValue = digitValue * (1 << (4 * i)); // Equivalent to pow(16, i)
       decimal += positionValue;
       
-      steps += "${hexValue[hexValue.length - i - 1]} (hex) => $digitValue * 16^$i = $positionValue\n";
+      steps += "${hexValue[hexValue.length - i - 1]}~(hex)~=>~$digitValue~*~16^$i~=~$positionValue~";
     }
 
-    steps += "Sum of all position values = $decimal (decimal)";
+    steps += "Sum~of~all~position~values~=~$decimal~(decimal)";
 
-    String result = "Decimal: $decimal\n\n$steps";
+    String result = "Decimal:~$decimal~$steps";
     return result;
   } catch (e) {
     return 'Invalid Input';
@@ -136,7 +136,7 @@ Future<String> convertBinaryToHex(String binaryValue) async {
     }
 
     String hex = "";
-    String steps = "Step-by-step working:\n";
+    String steps = "Step-by-step~working:~";
 
     // Process each group of 4 bits
     for (int i = 0; i < binaryValue.length; i += 4) {
@@ -146,10 +146,10 @@ Future<String> convertBinaryToHex(String binaryValue) async {
 
       hex += hexDigit;
       
-      steps += "Binary: $binaryChunk => Decimal: $decimalValue => Hex: $hexDigit\n";
+      steps += "Binary:~$binaryChunk~=>~Decimal:~$decimalValue~=>~Hex:~$hexDigit~";
     }
 
-    String result = "Hexadecimal: $hex\n\n$steps";
+    String result = "Hexadecimal:~$hex~$steps";
     return result;
   } catch (e) {
     return 'Invalid Input';
@@ -160,7 +160,7 @@ Future<String> convertBinaryToHex(String binaryValue) async {
 Future<String> convertHexToBinary(String hexValue) async {
   try {
     String binary = "";
-    String steps = "Step-by-step working:\n";
+    String steps = "Step-by-step~working:~";
 
     // Process each hexadecimal digit
     for (int i = 0; i < hexValue.length; i++) {
@@ -170,10 +170,10 @@ Future<String> convertHexToBinary(String hexValue) async {
 
       binary += binaryChunk;
       
-      steps += "Hex: $hexDigit => Decimal: $decimalValue => Binary: $binaryChunk\n";
+      steps += "Hex:~$hexDigit~=>~Decimal:~$decimalValue~=>~Binary:~$binaryChunk~";
     }
 
-    String result = "Binary: $binary\n\n$steps";
+    String result = "Binary:~$binary~$steps";
     return result;
   } catch (e) {
     return 'Invalid Input';
@@ -191,8 +191,8 @@ Future<String> convertDecimalTo2sComplement(String decimalValues) async {
     if (binary.length > totalBits) {
       return 'Error: Number too large for the specified bit width.';
     }
-    explanation += "Since the number is positive, its 2's complement is the same as its binary representation.\n";
-    explanation += "Binary representation: $binary\n";
+    explanation += "Since~the~number~is~positive,~its~2's~complement~is~the~same~as~its~binary~representation.~";
+    explanation += "Binary~representation: $binary\n";
     return binary + "\n\nExplanation:\n" + explanation;
   }
 
@@ -202,11 +202,11 @@ Future<String> convertDecimalTo2sComplement(String decimalValues) async {
   if (binary.length > totalBits) {
     return 'Error: Number too large for the specified bit width.';
   }
-  explanation += "1. Convert the absolute value to binary: $binary\n";
+  explanation += "1.~Convert~the~absolute~value~to~binary:~$binary\n";
 
   // Invert bits
   String invertedBinary = binary.split('').map((bit) => bit == '1' ? '0' : '1').join('');
-  explanation += "2. Invert all bits for 1's complement: $invertedBinary\n";
+  explanation += "2.~Invert~all~bits~for~1's~complement:~$invertedBinary\n";
 
   // Add 1 to the inverted binary string
   String twosComplement = addOneToBinaryReturnAns(invertedBinary, explanation);
@@ -234,7 +234,7 @@ String addOneToBinaryReturnAns(String binary, String explanation) {
     return 'Error: Overflow. The number is too large for the specified bit width.';
   }
   
-  explanation += "3. Add 1 to the 1's complement to get the 2's complement: " + binaryList.join('') + "\n";
+  explanation += "3.~Add~1~to~the~1's~complement~to~get~the~2's~complement:~" + binaryList.join('') + "~";
   
   return binaryList.join('');
 }
@@ -258,7 +258,7 @@ String addOneToBinaryReturnWorking(String binary, String explanation) {
     return 'Error: Overflow. The number is too large for the specified bit width.';
   }
   
-  explanation += "3. Add 1 to the 1's complement to get the 2's complement: " + binaryList.join('') + "\n";
+  explanation += "3.~Add~1~to~the~1's~complement~to~get~the~2's~complement:~" + binaryList.join('') + "~";
   
   return explanation;
 }
@@ -285,14 +285,14 @@ try{
 
   // Step 2: Convert binary to 2's complement
   String twosComplement = convertBinaryTo2sComplement(binary);
-  explanation = "Conversion steps:\n1. Hexadecimal to binary: $binary\n2. Binary to 2's complement: $twosComplement\n";
+  explanation = "Conversion~steps:~1.~Hexadecimal~to~binary:~$binary~2.~Binary~to~2's~complement:~$twosComplement~";
 
   // Explanation
   if(isNegative == false)
   {
-    return "$binary\n\nExplanation:\n$explanation";
+    return "$binary~Explanation:~$explanation";
   }
-  return "$twosComplement\n\nExplanation:\n$explanation";
+  return "$twosComplement~Explanation:~$explanation";
 }
 catch(e){
 return 'Error: Invalid hexadecimal input.';
@@ -359,6 +359,7 @@ String findUnknownX(String A, String B, String y, String Z) {
 List<String> calculateUnknownX(String A, String B, String y, String Z) {
   try{
     String explanation = '';
+    String explanationInLateX = '';
     int A_Base10 = 0;
     int y_value = int.parse(y);
     int Z_value = int.parse(Z);
@@ -391,11 +392,18 @@ List<String> calculateUnknownX(String A, String B, String y, String Z) {
     explanation += "1. Solve for x:\n";
     explanation += "A in base 10 = $Z_value - $B_value = $A_Base10\n";
     explanation += "find the base by trail and error starting from the largest value of A_x + 1 and convert to check with A_base10";
+
+    explanationInLateX += "1.~Solve~for~x:\n";
+    explanationInLateX += "A~in~base~10~=~$Z_value~-~$B_value~=~$A_Base10\n"; 
+    explanationInLateX += "~find~the~base~by~trail~and~error~starting~from~the~largest~value~of~A_x~+~1~and~convert~to~check~with~A_base10";
+
+
+    String returnAnswer = A + "\test{convert to decimal incement the base and compaore to its decimal value: }" + A_Base10.toString();
     // Step 3: Return answer and working explanation
-    return [A + " convert to decimal incement the base and compaore to its decimal value: " + A_Base10.toString(),explanation];
+    return [A + " convert to decimal incement the base and compaore to its decimal value: " + A_Base10.toString(),explanation,returnAnswer,explanationInLateX];
   }
   catch(E){
-    return ['Error: Invalid input.','Error: Invalid input.'];
+    return ['Error: Invalid input.','Error: Invalid input.','Error: Invalid input.','Error: Invalid input.'];
   }
   
   
@@ -405,6 +413,8 @@ List<String> calculateUnknownX(String A, String B, String y, String Z) {
 List<String> calculateUnknownA(String B, String y, String Z, String x) {
   try{
     String explanation = '';
+    String explanationInLateX = '';
+
     int x_value = int.parse(x);
     int y_value = int.parse(y);
     int Z_value = int.parse(Z);
@@ -416,19 +426,25 @@ List<String> calculateUnknownA(String B, String y, String Z, String x) {
     A = Z_value - B_value;
     String A_x = A.toRadixString(x_value);
     //for A value in base x
-    explanation += "Solve for A: A_"+x+" = "+Z+"_10 - "+B+"_"+y+"\n";
-    explanation += " A in base 10 = $Z_value - $B_value = $A \n";
-    explanation += "A in base $x = $A_x\n";
+    explanation += "Solve for A: A_ "+x+" = "+Z+"_10 - "+B+"_"+y+"\n";
+    explanation += " A in base 10  = $Z_value - $B_value = $A \n";
+    explanation += "A in base  $x = $A_x\n";
+
+
+    explanationInLateX += "Solve~for~A:~A_~"+x+"~=~"+Z+"_10~-~"+B+"_"+y+"\n"; 
+    explanationInLateX += "~A~in~base~10~=$Z_value~-~$B_value~=~$A\n"; 
+    explanationInLateX += "~A~in~base~$x~=~$A_x\n";
+
 
     //A = Z_value
     // Step 2: Generate working explanation
     
 
     // Step 3: Return answer and working explanation
-    return [A_x.toString(),explanation];
+    return [A_x.toString(),explanation,A_x.toString(),explanationInLateX];
   }
   catch(E){
-    return ['Error: Invalid input.','Error: Invalid input.'];
+    return ['Error: Invalid input.','Error: Invalid input.','Error: Invalid input.','Error: Invalid input.'];
   }
   
 }
@@ -447,11 +463,11 @@ String baseToDecimalConversion(String dec, String BaseN) {
           num positionValue = digitValue * pow(baseN, i); // Equivalent to pow(16, i)
           decimal += int.parse(positionValue.toString());
           
-          steps += "${baseNValue[baseNValue.length - i - 1]} (hex) => $digitValue * 16^$i = $positionValue\n";
+          steps += "${baseNValue[baseNValue.length - i - 1]}~($BaseN)~=>~$digitValue~*~$BaseN^$i~=~$positionValue\n";
         }
 
-      steps += "Sum of all position values = $decimal (decimal)";
-      String result = "Decimal: $decimal\n\n$steps";
+      steps += "Sum~of~all~position~values~=~$decimal~(decimal)";
+      String result = "Decimal:~$decimal~$steps";
       //int decimalValue = int.parse(parts[0], radix: int.parse(parts[1]));
       return result;
   }
@@ -477,7 +493,9 @@ String convertDecimalToBaseNGivenDec (String dec, String BaseN)  {
       int remainder = decimal % baseN;
       String BaseNDigit = getBaseNDigitDigit(remainder);
       BaseNValue = BaseNDigit + BaseNValue;
-      steps += "Decimal: $decimal/16 = Q: ${decimal ~/ baseN}, R: $remainder (becomes $BaseNDigit in $baseN)\n";
+      steps += "\nDecimal:~\\frac{$decimal}{$BaseN}~=~Q:~${decimal ~/ baseN},~R:~$remainder~(becomes~$BaseNDigit~in~$baseN)";
+      //steps += "Decimal: \frac{" + decimal.toString() + "/16} = Q: \frac{" + decimal.toString() + "~/" + baseN;
+
       decimal = decimal ~/ baseN;
     }
 
@@ -537,6 +555,8 @@ String getHexDigit(int remainder) {
 List<String> calculateUnknownX_add(String A, String B, String y, String Z) {
   try{
     String explanation = '';
+    String explanationInLateX = '';
+    String returnedTextInLatex = '';
     int A_Base10 = 0;
     int y_value = int.parse(y);
     int Z_value = int.parse(Z);
@@ -545,13 +565,18 @@ List<String> calculateUnknownX_add(String A, String B, String y, String Z) {
     A_Base10 = Z_value - B_value;
     String A_Basei = '';
     explanation += "1. Solve for x:\n";
+    explanationInLateX += "1.~ Solve ~for ~x:~";
     explanation += "A in base 10 = $Z_value - $B_value = $A_Base10\n";
+    explanationInLateX += "A ~in~ base ~10 ~=~ $Z_value ~-~ $B_value ~=~ $A_Base10~";
+
     explanation += "find the base by trail and error starting from the largest value of A_x + 1 and convert to check with A_base10";
+    explanationInLateX += "\\text{find the base by trail and error starting from the largest value of A_x + 1 and convert to check with A_base10}";
+    returnedTextInLatex = A.toUpperCase() + " ~convert ~to~ decimal ~incement~ the~ base~ and~ compaore~ to~ its~ decimal~ value:~ " + A_Base10.toString();
     // Step 3: Return answer and working explanation
-    return [A.toUpperCase() + " convert to decimal incement the base and compaore to its decimal value: " + A_Base10.toString(),explanation];
+    return [A.toUpperCase() + " convert to decimal incement the base and compaore to its decimal value: " + A_Base10.toString(),explanation,returnedTextInLatex,explanationInLateX];
   }
   catch(E){
-    return ['Error: Invalid input.','Error: Invalid input.'];
+    return ['Error: Invalid input.','Error: Invalid input.','Error: Invalid input.','Error: Invalid input.'];
   }
   
   
@@ -561,6 +586,8 @@ List<String> calculateUnknownX_add(String A, String B, String y, String Z) {
 List<String> calculateUnknownA_add(String B, String y, String Z, String x) {
   try{
     String explanation = '';
+    String explanationInLateX = '';
+
     int x_value = int.parse(x);
     int y_value = int.parse(y);
     int Z_value = int.parse(Z);
@@ -573,18 +600,20 @@ List<String> calculateUnknownA_add(String B, String y, String Z, String x) {
     String A_x = A.toRadixString(x_value);
 
     explanation += "Solve for A: A_"+x+" = "+Z+"_10 - "+B+"_"+y+"\n";
-
+    explanationInLateX += "Solve ~for~ A:~ A_"+x+"~ =~ "+Z+"_10 ~-~ "+B+"_"+y+"~";
     explanation += " A in base 10 = $Z_value - $B_value = $A \n";
+    explanationInLateX += " ~A~ in~ base~ 10~ = ~$Z_value~ -~ $B_value~ =~ $A~ \n";
 
     explanation += "A in base $x = $A_x\n";
+    explanationInLateX += "A ~in~ base ~$x ~= ~$A_x\n~";
 
  
 
     // Return answer and working explanation
-    return [A_x.toString().toUpperCase(),explanation];
+    return [A_x.toString().toUpperCase(),explanation,A_x.toString().toUpperCase(),explanationInLateX];
   }
   catch(E){
-    return ['Error: Invalid input.','Error: Invalid input.'];
+    return ['Error: Invalid input.','Error: Invalid input.','Error: Invalid input.','Error: Invalid input.'];
   }
   
 }
@@ -593,6 +622,8 @@ List<String> calculateUnknownA_add(String B, String y, String Z, String x) {
 List<String> calculateUnknownA_sub(String B, String y, String Z, String x) {
   try{
     String explanation = '';
+    String explanationInLateX = '';
+
     int x_value = int.parse(x);
     int y_value = int.parse(y);
     int Z_value = int.parse(Z);
@@ -607,16 +638,19 @@ List<String> calculateUnknownA_sub(String B, String y, String Z, String x) {
     explanation += "Solve for A: A_"+x+" = "+Z+"_10 + "+B+"_"+y+"\n";
     explanation += " A in base 10 = $Z_value + $B_value = $A \n";
     explanation += "A in base $x = $A_x\n";
+    explanationInLateX += "Solve~ for~ A:~ A_"+x+"~ =~ "+Z+"_10~ +~ "+B+"_"+y+"~";
+    explanationInLateX += " A~ in~ base~ 10~ = ~$Z_value~ +~ $B_value~ =~ $A~ \n";
+    explanationInLateX += "A~ in ~base~ $x ~= ~$A_x~\n";
 
     //A = Z_value
     // Step 2: Generate working explanation
     
 
     // Step 3: Return answer and working explanation
-    return [A_x.toString(),explanation];
+    return [A_x.toString(),explanation,A_x.toString(),explanationInLateX];
   }
   catch(E){
-    return ['Error: Invalid input.','Error: Invalid input.'];
+    return ['Error: Invalid input.','Error: Invalid input.','Error: Invalid input.','Error: Invalid input.'];
   }
   
 }
@@ -625,6 +659,7 @@ List<String> calculateUnknownA_sub(String B, String y, String Z, String x) {
 List<String> calculateUnknownX_sub(String A, String B, String y, String Z) {
   try{
     String explanation = '';
+    String explanationInLateX = '';
     int A_Base10 = 0;
     int y_value = int.parse(y);
     int Z_value = int.parse(Z);
@@ -635,11 +670,16 @@ List<String> calculateUnknownX_sub(String A, String B, String y, String Z) {
     explanation += "1. Solve for x:\n";
     explanation += "A in base 10 = $Z_value + $B_value = $A_Base10\n";
     explanation += "find the base by trail and error starting from the largest value of A_x + 1 and convert to check with A_base10";
+    explanationInLateX += "1.~ Solve~ for~ x:~";
+    explanationInLateX += "A ~in~ base ~10~ =~ $Z_value ~+~ $B_value ~=~ $A_Base10\n~";
+    explanationInLateX += "\text{find the base by trail and error starting from the largest value of A_x + 1 and convert to check with A_base10}";
+  //"\text{string1 string2}"
     // Step 3: Return answer and working explanation
-    return [A + " convert to decimal incement the base and compaore to its decimal value: " + A_Base10.toString(),explanation];
+    String returnAnswer = A + "~\text{convert to decimal incement the base and compaore to its decimal value:}" + A_Base10.toString();
+    return [A + " convert to decimal incement the base and compaore to its decimal value: " + A_Base10.toString(),explanation,returnAnswer,explanationInLateX];
   }
   catch(E){
-    return ['Error: Invalid input.','Error: Invalid input.'];
+    return ['Error: Invalid input.','Error: Invalid input.','Error: Invalid input.','Error: Invalid input.'];
   }
   
   
@@ -665,6 +705,7 @@ String convertFromDecimalToBase(int decimalValue, int base) {
 List<String> calculateUnknownA_mul(String B, String y, String Z, String x) {
   try {
     String explanation = '';
+    String explanationInLateX = '';
     int x_value = int.parse(x);
     int y_value = int.parse(y);
     int Z_value = int.parse(Z);
@@ -683,10 +724,14 @@ List<String> calculateUnknownA_mul(String B, String y, String Z, String x) {
     explanation += " A in base 10 = $Z_value ÷ $B_value = $A\n";
     explanation += "A in base $x = $A_x\n";
 
+    explanationInLateX +="Solve~for~A:~A_$x~*~$B\_$y~=~$Z\_10\n";
+    explanationInLateX +="~A~in~base~10~=~$Z_value~÷~$B_value~=~$A\n";
+    explanationInLateX += "~A~in~base~$x~=~$A_x\n";
+
     // Return answer and working explanation
-    return [A_x.toString(), explanation];
+    return [A_x.toString(), explanation,A_x.toString(),explanationInLateX];
   } catch (E) {
-    return ['Error: Invalid input.', 'Error: Invalid input.'];
+    return ['Error: Invalid input.', 'Error: Invalid input.','Error: Invalid input.','Error: Invalid input.'];
   }
 }
 
@@ -694,6 +739,8 @@ List<String> calculateUnknownA_mul(String B, String y, String Z, String x) {
 List<String> calculateUnknownX_mul(String A, String B, String y, String Z) {
   try {
     String explanation = '';
+    String explanationInLateX = '';
+
     int y_value = int.parse(y);
     int Z_value = int.parse(Z);
     int B_value = baseToDecimalConversionFunc(B, y_value);
@@ -708,7 +755,13 @@ List<String> calculateUnknownX_mul(String A, String B, String y, String Z) {
           explanation += "Try base $x: $A\_$x = $A_decimal\_10\n";
           explanation += "Multiply A_decimal and B_decimal: $A_decimal * $B_value = ${A_decimal * B_value}\n";
           explanation += "Result matches Z_decimal ($Z_value), so x = $x\n";
-          return [x.toString(), explanation];
+          
+          explanationInLateX +="Convert~A~to~decimal~(base~10):\n";
+          explanationInLateX += "Try~base~$x:~$A\_$x~=~$A_decimal\_10\n";
+          explanationInLateX +="Multiply~A_decimal~and~B_decimal:~$A_decimal~*~$B_value~=~${A_decimal * B_value}\n";
+          explanationInLateX += "Result~matches~Z_decimal~($Z_value),~so~x~=~$x\n";
+
+          return [x.toString(), explanation, x.toString(), explanationInLateX];
         }
       } catch (e) {
         // Ignore invalid base conversion errors and continue the loop
@@ -716,9 +769,9 @@ List<String> calculateUnknownX_mul(String A, String B, String y, String Z) {
     }
 
     // If no valid base is found
-    return ['No valid base found for A', 'No valid base found for A'];
+    return ['No valid base found for A', 'No valid base found for A','No valid base found for A', 'No valid base found for A'];
   } catch (E) {
-    return ['Error: Invalid input.', 'Error: Invalid input.'];
+    return ['Error: Invalid input.', 'Error: Invalid input.','Error: Invalid input.', 'Error: Invalid input.'];
   }
 }
 
@@ -727,6 +780,8 @@ List<String> calculateUnknownX_mul(String A, String B, String y, String Z) {
 List<String> calculateUnknownA_divide(String B, String y, String Z, String x) {
   try {
     String explanation = '';
+    String explanationInLateX = '';
+
     int x_value = int.parse(x);
     int y_value = int.parse(y);
     double Z_value = double.parse(Z);
@@ -745,10 +800,14 @@ List<String> calculateUnknownA_divide(String B, String y, String Z, String x) {
     explanation += " A in base 10 = $Z_value × $B_value = $A\n";
     explanation += "A in base $x = $A_x\n";
 
+    explanationInLateX += "Solve~for~A:~A_$x~/~$B\_$y~=~$Z\_10\n";
+    explanationInLateX += "~A~in~base~10~=~$Z_value~×~$B_value~=~$A\n";
+    explanationInLateX += "A~in~base~$x~=~$A_x\n";
+
     // Return answer and working explanation
-    return [A_x.toString(), explanation];
+    return [A_x.toString(), explanation,A_x.toString(),explanationInLateX];
   } catch (E) {
-    return ['Error: Invalid input.', 'Error: Invalid input.'];
+    return ['Error: Invalid input.', 'Error: Invalid input.','Error: Invalid input.', 'Error: Invalid input.'];
   }
 }
 
@@ -756,6 +815,8 @@ List<String> calculateUnknownA_divide(String B, String y, String Z, String x) {
 List<String> calculateUnknownX_divide(String A, String B, String y, String Z) {
   try {
     String explanation = '';
+    String explanationInLateX = '';
+
     int y_value = int.parse(y);
     double Z_value = double.parse(Z);
     int B_value = baseToDecimalConversionFunc(B, y_value);
@@ -770,7 +831,16 @@ List<String> calculateUnknownX_divide(String A, String B, String y, String Z) {
           explanation += "Try base $x: $A\_$x = $A_decimal\_10\n";
           explanation += "Divide A_decimal by B_decimal: $A_decimal / $B_value = ${A_decimal / B_value}\n";
           explanation += "Result matches Z_decimal ($Z_value), so x = $x\n";
-          return [x.toString(), explanation];
+
+          explanationInLateX += "Convert~A~to~decimal~(base~10):\n";
+
+          explanationInLateX += "Try~base~$x:~$A\_$x~=~$A_decimal\_10\n";
+          explanationInLateX += "Divide~A_decimal~by~B_decimal:~$A_decimal~/~$B_value~=~${A_decimal~/~B_value}\n";
+          explanationInLateX += "Result~matches~Z_decimal~($Z_value),~so~x~=~$x\n";
+
+          return [x.toString(), explanation,x.toString(),explanationInLateX];
+
+
         }
       } catch (e) {
         // Ignore invalid base conversion errors and continue the loop
@@ -778,8 +848,8 @@ List<String> calculateUnknownX_divide(String A, String B, String y, String Z) {
     }
 
     // If no valid base is found
-    return ['No valid base found for A', 'No valid base found for A'];
+    return ['No valid base found for A', 'No valid base found for A','No valid base found for A', 'No valid base found for A'];
   } catch (E) {
-    return ['Error: Invalid input.', 'Error: Invalid input.'];
+    return ['Error: Invalid input.', 'Error: Invalid input.','Error: Invalid input.', 'Error: Invalid input.'];
   }
 }

@@ -1,4 +1,6 @@
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'calculations/number_system_functions.dart';
@@ -276,8 +278,29 @@ class _newBaseNSolverStatePG2 extends State<newBaseNSolverPG2> {
               child: Text('Solve'),
             ),
             //output the result in Math.tex in a scroll view  
+            Expanded(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height - 300,
+                ),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Math.tex(
+                          _result[0] + _result[1],
+                          textScaleFactor: 1.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
             ConstrainedBox(constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height - 300,
+              maxHeight: MediaQuery.of(context).size.height,
             ),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -294,7 +317,7 @@ class _newBaseNSolverStatePG2 extends State<newBaseNSolverPG2> {
             //text for the output that can does not lead to pixel overflow
             ConstrainedBox(
               constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height - 300,
+                maxHeight: MediaQuery.of(context).size.height,
               ),
               child: TeXView(
                 renderingEngine: const TeXViewRenderingEngine.katex(),
@@ -326,7 +349,7 @@ class newBaseNSolver extends StatefulWidget {
 }
 
 class _newBaseNSolverState extends State<newBaseNSolver> {
-  List _result = ['',''];
+  List _result = ['','','',''];
   String dropdownValueArithmetic = '+'; //default the dropdown value to plus
   String dropdownValueUnknownSelection = 'x is unknown';
   TextEditingController _controllerA = TextEditingController();
@@ -550,6 +573,19 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
                     ),
                   ),
                 ),
+
+                //text to show the equal sign
+                Container(
+                  width: 30,
+                  child: Text(
+                          '=',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                          ),
+                        )
+
+
+                ),
                 //textfield for Z
                 Container(
                   width: 50,
@@ -577,7 +613,7 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
               scrollDirection: Axis.horizontal,
                 child: Row(children: [
                   Padding(padding:  EdgeInsets.all(8.0),
-                  child: Math.tex(_result[0]+_result[1],textScaleFactor: 4.0,)
+                  child: Math.tex(_result[2]+"~"+_result[3],textScaleFactor: 4.0,)
                   ),
                 
                 ],),
@@ -592,7 +628,7 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
               ),
               child: TeXView(
                 renderingEngine: const TeXViewRenderingEngine.katex(),
-                child: TeXViewDocument(_result[1]),
+                child: TeXViewDocument(_result[0]+_result[1]),
               ),
             ),
             
@@ -763,7 +799,7 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
     return Scaffold(
       
       appBar: AppBar(
-        title: Text('number system easy'),
+        title: Text('number system conversion'),
       ),
       body: Container(
         padding: EdgeInsets.all(20.0),
@@ -844,34 +880,25 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
               onPressed: 
               _convert, 
             ),
-            SizedBox(height: 20),
-            ConstrainedBox(constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height - 300,
+            
+            Wrap(
+            direction: Axis.horizontal,
+            children: [
+              ConstrainedBox(constraints: BoxConstraints(maxWidth: 800),
+              child: 
+              SingleChildScrollView(
+                            physics: ClampingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            child: SelectableMath.tex(
+                                _result,
+                                textStyle: TextStyle(fontSize: 18),
+                              ),
+                            ),
+              )
+            ],
+            
             ),
-            child: TeXView(
-              renderingEngine: const TeXViewRenderingEngine.katex(),
-              child:  TeXViewDocument(_result),
-              //_result,
-              //style: TextStyle(fontSize: 20),
-            ),
-            ),
-            SingleChildScrollView(
-                  physics: BouncingScrollPhysics(), // Adds a bounce effect on iOS, scroll glow on Android
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      // Set a minimum height for the content if necessary. Adjust this value based on your needs.
-                      // This ensures the box takes up at least a certain size but can grow with the content.
-                      minHeight: MediaQuery.of(context).size.height - 300,
-                    ),
-                    child: IntrinsicHeight(
-                      child: TeXView(
-                        renderingEngine: const TeXViewRenderingEngine.katex(),
-                        child: TeXViewDocument(_result),
-                      ),
-                    ),
-                  ),
 
-            ),
 /*             ConstrainedBox(constraints: BoxConstraints(
               maxHeight: MediaQuery.of(context).size.height - 300,
             ),
