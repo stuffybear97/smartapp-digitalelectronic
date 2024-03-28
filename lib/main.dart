@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:test1/de_pages.dart';
+import 'package:Number_System/de_pages.dart';
 import 'calculations/number_system_functions.dart';
 import 'calculations/kmap.dart';
 
