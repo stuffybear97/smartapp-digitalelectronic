@@ -19,327 +19,6 @@ import 'mathdemo/feature.dart';
 
 
 
-class newBaseNSolverPG2 extends StatefulWidget {
-  @override
-  _newBaseNSolverStatePG2 createState() => _newBaseNSolverStatePG2();
-}
-
-class _newBaseNSolverStatePG2 extends State<newBaseNSolverPG2> {
-  List _result = ['',''];
-  String dropdownValueArithmetic = '+'; //default the dropdown value to plus
-  String dropdownValueUnknownSelection = 'x is unknown';
-  TextEditingController _controllerA = TextEditingController();
-  TextEditingController _controllerBaseA = TextEditingController();
-  TextEditingController _controllerB = TextEditingController();
-  TextEditingController _controllerBaseB = TextEditingController();
-  TextEditingController _controllerZ = TextEditingController(); // Added TextField for Z
-
-    void _convert() async {
-      SystemChrome.setPreferredOrientations([
-            DeviceOrientation.portraitUp,
-                  DeviceOrientation.landscapeLeft,
-
-
-    ]);
-    List result = ['',''];
-    String A = '';
-    String B = '';
-    String Z = '';
-    String x = '';
-    String y = '';
-    if (dropdownValueArithmetic == '+') {
-          if(dropdownValueUnknownSelection == "x is unknown"){
-          A = _controllerA.text;
-          B = _controllerB.text;
-          Z = _controllerZ.text;
-          y = _controllerBaseB.text;
-          x = _controllerBaseA.text;
-          result = calculateUnknownX_add(A,B,y,Z);
-        }
-        else if(dropdownValueUnknownSelection == "A is unknown")
-        {
-          A = _controllerA.text;
-          B = _controllerB.text;
-          Z = _controllerZ.text;
-          y = _controllerBaseB.text;
-          x = _controllerBaseA.text;
-          result = calculateUnknownA_add(B,y,Z,x);
-        }
-        else{
-          A = _controllerA.text;
-          B = _controllerB.text;
-          Z = _controllerZ.text;
-          y = _controllerBaseB.text;
-          x = _controllerBaseA.text;
-          result = calculateUnknownX_add(A,B,y,Z);
-        }
-    } else if (dropdownValueArithmetic == '-') {
-        if(dropdownValueUnknownSelection == "x is unknown"){
-          A = _controllerA.text;
-          B = _controllerB.text;
-          Z = _controllerZ.text;
-          y = _controllerBaseB.text;
-          x = _controllerBaseA.text;
-          result = calculateUnknownX_sub(A,B,y,Z);
-        }
-        else if(dropdownValueUnknownSelection == "A is unknown")
-        {
-          A = _controllerA.text;
-          B = _controllerB.text;
-          Z = _controllerZ.text;
-          y = _controllerBaseB.text;
-          x = _controllerBaseA.text;
-          result = calculateUnknownA_sub(B,y,Z,x);
-        }
-        else{
-          A = _controllerA.text;
-          B = _controllerB.text;
-          Z = _controllerZ.text;
-          y = _controllerBaseB.text;
-          x = _controllerBaseA.text;
-          result = calculateUnknownX_sub(A,B,y,Z);
-        }
-    } else if (dropdownValueArithmetic == '*') {
-      if(dropdownValueUnknownSelection == "x is unknown"){
-          A = _controllerA.text;
-          B = _controllerB.text;
-          Z = _controllerZ.text;
-          y = _controllerBaseB.text;
-          x = _controllerBaseA.text;
-          result = calculateUnknownX_mul(A,B,y,Z);
-        }
-        else if(dropdownValueUnknownSelection == "A is unknown")
-        {
-          A = _controllerA.text;
-          B = _controllerB.text;
-          Z = _controllerZ.text;
-          y = _controllerBaseB.text;
-          x = _controllerBaseA.text;
-          result = calculateUnknownA_mul(B,y,Z,x);
-        }
-        else{
-          A = _controllerA.text;
-          B = _controllerB.text;
-          Z = _controllerZ.text;
-          y = _controllerBaseB.text;
-          x = _controllerBaseA.text;
-          result = calculateUnknownX_mul(A,B,y,Z);
-        }
-    } else if (dropdownValueArithmetic == '/') {
-      if(dropdownValueUnknownSelection == "x is unknown"){
-          A = _controllerA.text;
-          B = _controllerB.text;
-          Z = _controllerZ.text;
-          y = _controllerBaseB.text;
-          x = _controllerBaseA.text;
-          result = calculateUnknownX_divide(A,B,y,Z);
-        }
-        else if(dropdownValueUnknownSelection == "A is unknown")
-        {
-          A = _controllerA.text;
-          B = _controllerB.text;
-          Z = _controllerZ.text;
-          y = _controllerBaseB.text;
-          x = _controllerBaseA.text;
-          result = calculateUnknownA_divide(B,y,Z,x);
-        }
-        else{
-          A = _controllerA.text;
-          B = _controllerB.text;
-          Z = _controllerZ.text;
-          y = _controllerBaseB.text;
-          x = _controllerBaseA.text;
-          result = calculateUnknownX_divide(A,B,y,Z);
-        }
-      
-    }
-
-    
-
-    setState(() {
-      _result = result;
-    });
-  }  
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('new Base N Solver'),
-      ),
-      body: Center(
-
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Math.tex(
-              "A_x + B_y = Z", 
-              textStyle: TextStyle(color: const Color.fromARGB(255, 19, 21, 19)),
-            ),
-            //a dropwdown for selection of unknown variable A or x
-            DropdownButton<String>(
-              value: dropdownValueUnknownSelection,
-              onChanged: (String? newValue) {
-                setState(() {
-                  dropdownValueUnknownSelection = newValue!;
-                });
-              },
-              items: <String>['x is unknown', 'A is unknown']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
-
-            //row of textfields for input for A, subscript x, B, subscript y, and Z
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                //textfield for A
-                Container(
-                  width: 50,
-                  child: TextField(
-                    controller: _controllerA,
-                    decoration: InputDecoration(
-                      hintText: 'A',
-                    ),
-                  ),
-                ),
-                //textfield for subscript x
-                Container(
-                  width: 50,
-                  child: TextField(
-                    controller: _controllerBaseA,
-                    decoration: InputDecoration(
-                      hintText: 'x',
-                    ),
-                  ),
-                ),
-                //drowpdown for selection of + or - or * or /
-                DropdownButton<String>(
-                  value: '+',
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      dropdownValueArithmetic = newValue!;
-                    });
-                  },
-                  items: <String>['+', '-', '*', '/']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-                //textfield for B
-                Container(
-                  width: 50,
-                  child: TextField(
-                    controller: _controllerB,
-                    decoration: InputDecoration(
-                      hintText: 'B',
-                    ),
-                  ),
-                ),
-                //textfield for subscript y
-                Container(
-                  width: 50,
-                  child: TextField(
-                    controller: _controllerBaseB,
-                    decoration: InputDecoration(
-                      hintText: 'y',
-                    ),
-                  ),
-                ),
-                Container(
-                  width: 50,
-                  child: Text(" = ")
-
-                ),
-                //textfield for Z
-                Container(
-                  width: 50,
-                  child: TextField(
-                    controller: _controllerZ,
-                    decoration: InputDecoration(
-                      hintText: 'Z',
-                    ),
-                  ),
-                ),
-              ],
-
-            ),
-            //button to solve the equation
-            
-            ElevatedButton(
-              onPressed: _convert,
-              child: Text('Solve'),
-            ),
-            //output the result in Math.tex in a scroll view  
-            Expanded(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height - 300,
-                ),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Math.tex(
-                          _result[0] + _result[1],
-                          textScaleFactor: 1.0,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            ConstrainedBox(constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height,
-            ),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-                child: Row(children: [
-                  Padding(padding:  EdgeInsets.all(8.0),
-                  child: Math.tex(_result[0]+_result[1],textScaleFactor: 1.0,)
-                  ),
-                
-                ],),
-                      
-            ),
-            ),
-
-            //text for the output that can does not lead to pixel overflow
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height,
-              ),
-              child: TeXView(
-                renderingEngine: const TeXViewRenderingEngine.katex(),
-                child: TeXViewDocument(_result[0]+_result[1]),
-              ),
-            ),
-            
-
-            ElevatedButton(
-              onPressed: () {
-                // Navigate back to the first page using a named route
-                Navigator.pop(context);
-              },
-              child: Text('Return to Main Menu'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 
 
 
@@ -351,7 +30,7 @@ class newBaseNSolver extends StatefulWidget {
 class _newBaseNSolverState extends State<newBaseNSolver> {
   List _result = ['','','',''];
   String dropdownValueArithmetic = '+'; //default the dropdown value to plus
-  String dropdownValueUnknownSelection = 'x is unknown';
+  String dropdownValueUnknownSelection = 'A is unknown';
   TextEditingController _controllerA = TextEditingController();
   TextEditingController _controllerBaseA = TextEditingController();
   TextEditingController _controllerB = TextEditingController();
@@ -395,7 +74,7 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
           Z = _controllerZ.text;
           y = _controllerBaseB.text;
           x = _controllerBaseA.text;
-          result = calculateUnknownX_add(A,B,y,Z);
+          result = calculateUnknownZ_add(A,B,y,Z);
         }
     } else if (dropdownValueArithmetic == '-') {
         if(dropdownValueUnknownSelection == "x is unknown"){
@@ -421,7 +100,7 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
           Z = _controllerZ.text;
           y = _controllerBaseB.text;
           x = _controllerBaseA.text;
-          result = calculateUnknownX_sub(A,B,y,Z);
+          result = calculateUnknownZ_sub(A,B,y,Z);
         }
     } else if (dropdownValueArithmetic == '*') {
       if(dropdownValueUnknownSelection == "x is unknown"){
@@ -447,7 +126,7 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
           Z = _controllerZ.text;
           y = _controllerBaseB.text;
           x = _controllerBaseA.text;
-          result = calculateUnknownX_mul(A,B,y,Z);
+          result = calculateUnknownZ_mul(A,B,y,Z);
         }
     } else if (dropdownValueArithmetic == '/') {
       if(dropdownValueUnknownSelection == "x is unknown"){
@@ -473,7 +152,7 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
           Z = _controllerZ.text;
           y = _controllerBaseB.text;
           x = _controllerBaseA.text;
-          result = calculateUnknownX_divide(A,B,y,Z);
+          result = calculateUnknownZ_divide(A,B,y,Z);
         }
       
     }
@@ -504,7 +183,7 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
                   dropdownValueUnknownSelection = newValue!;
                 });
               },
-              items: <String>['x is unknown', 'A is unknown']
+              items: <String>['x is unknown', 'A is unknown', 'Z is unknown']
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
