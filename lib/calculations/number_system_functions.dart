@@ -853,3 +853,115 @@ List<String> calculateUnknownX_divide(String A, String B, String y, String Z) {
     return ['Error: Invalid input.', 'Error: Invalid input.','Error: Invalid input.', 'Error: Invalid input.'];
   }
 }
+
+// Function to solve for Z(decimal) in A_x + B_y = Z
+List<String> calculateUnknownZ_add(String A, String x, String B, String y) {
+  try {
+    String explanation = '';
+    String explanationInLateX = '';
+
+    int x_value = int.parse(x);
+    int y_value = int.parse(y);
+    int A_value = baseToDecimalConversionFunc(A, x_value);
+    int B_value = baseToDecimalConversionFunc(B, y_value);
+
+    // Step 1: Solve for Z
+    int Z = A_value + B_value;
+
+    explanation += "Solve for Z: $A\_$x + $B\_$y = Z_10\n";
+    explanation += " Z in base 10 = $A_value + $B_value = $Z\n";
+
+    explanationInLateX += "Solve~for~Z:~$A\_$x~+~$B\_$y~=~Z_10\n";
+    explanationInLateX += "~Z~in~base~10~=~$A_value~+~$B_value~=~$Z\n";
+
+    // Return answer and working explanation
+    return [Z.toString(), explanation, Z.toString(), explanationInLateX];
+  } catch (E) {
+    return ['Error: Invalid input.', 'Error: Invalid input.','Error: Invalid input.', 'Error: Invalid input.'];
+  }
+}
+//Function to solve for Z(decimal) in A_x - B_y = Z
+List<String> calculateUnknownZ_sub(String A, String x, String B, String y) {
+  try {
+    String explanation = '';
+    String explanationInLateX = '';
+
+    int x_value = int.parse(x);
+    int y_value = int.parse(y);
+    int A_value = baseToDecimalConversionFunc(A, x_value);
+    int B_value = baseToDecimalConversionFunc(B, y_value);
+
+    // Step 1: Solve for Z
+    int Z = A_value - B_value;
+
+    explanation += "Solve for Z: $A\_$x - $B\_$y = Z_10\n";
+    explanation += " Z in base 10 = $A_value - $B_value = $Z\n";
+
+    explanationInLateX += "Solve~for~Z:~$A\_$x~-~$B\_$y~=~Z_10\n";
+    explanationInLateX += "~Z~in~base~10~=~$A_value~-~$B_value~=~$Z\n";
+
+    // Return answer and working explanation
+    return [Z.toString(), explanation, Z.toString(), explanationInLateX];
+  } catch (E) {
+    return ['Error: Invalid input.', 'Error: Invalid input.','Error: Invalid input.', 'Error: Invalid input.'];
+  }
+}
+
+//Function to solve for Z(decimal) in A_x * B_y = Z
+List<String> calculateUnknownZ_mul(String A, String x, String B, String y) {
+  try {
+    String explanation = '';
+    String explanationInLateX = '';
+
+    int x_value = int.parse(x);
+    int y_value = int.parse(y);
+    int A_value = baseToDecimalConversionFunc(A, x_value);
+    int B_value = baseToDecimalConversionFunc(B, y_value);
+
+    // Step 1: Solve for Z
+    int Z = A_value * B_value;
+
+    explanation += "Solve for Z: $A\_$x * $B\_$y = Z_10\n";
+    explanation += " Z in base 10 = $A_value * $B_value = $Z\n";
+
+    explanationInLateX += "Solve~for~Z:~$A\_$x~*~$B\_$y~=~Z_10\n";
+    explanationInLateX += "~Z~in~base~10~=~$A_value~*~$B_value~=~$Z\n";
+
+    // Return answer and working explanation
+    return [Z.toString(), explanation, Z.toString(), explanationInLateX];
+  } catch (E) {
+    return ['Error: Invalid input.', 'Error: Invalid input.','Error: Invalid input.', 'Error: Invalid input.'];
+  }
+}
+
+//calculateUnknownZ_divide Function to solve for Z(decimal) in A_x / B_y = Z
+List<String> calculateUnknownZ_divide(String A, String x, String B, String y) {
+  try {
+    String explanation = '';
+    String explanationInLateX = '';
+
+    int x_value = int.parse(x);
+    int y_value = int.parse(y);
+    int A_value = baseToDecimalConversionFunc(A, x_value);
+    int B_value = baseToDecimalConversionFunc(B, y_value);
+
+    // Step 1: Solve for Z
+    double Z = 0; // for Z in base 10
+    if (B_value != 0) {
+      Z = A_value / B_value;
+    } else {
+      throw Exception('Division by zero error: B cannot be zero.');
+    }
+
+    explanation += "Solve for Z: $A\_$x / $B\_$y = Z_10\n";
+    explanation += " Z in base 10 = $A_value ÷ $B_value = $Z\n";
+
+    explanationInLateX += "Solve~for~Z:~$A\_$x~/~$B\_$y~=~Z_10\n";
+    explanationInLateX += "~Z~in~base~10~=~$A_value~÷~$B_value~=~$Z\n";
+
+    // Return answer and working explanation
+    return [Z.toStringAsFixed(5), explanation, Z.toStringAsFixed(5), explanationInLateX];
+  } catch (E) {
+    return ['Error: Invalid input.', 'Error: Invalid input.','Error: Invalid input.', 'Error: Invalid input.'];
+  }
+}
