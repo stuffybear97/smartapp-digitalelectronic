@@ -83,7 +83,7 @@ Future<String> convertDecimalToHex(String decimalValue) async {
     String result = "$hexa, \n\n$steps";
     return result;
   } catch (e) {
-    return 'Invalid Input';
+    return 'Invalid~Input';
   }
 }
 
@@ -116,7 +116,7 @@ Future<String> convertHexToDecimal(String hexValue) async {
     String result = "Decimal:~$decimal~$steps";
     return result;
   } catch (e) {
-    return 'Invalid Input';
+    return 'Invalid~Input';
   }
 }
 
@@ -463,7 +463,8 @@ String baseToDecimalConversion(String dec, String BaseN) {
           num positionValue = digitValue * pow(baseN, i); // Equivalent to pow(16, i)
           decimal += int.parse(positionValue.toString());
           
-          steps += "${baseNValue[baseNValue.length - i - 1]}~($BaseN)~=>~$digitValue~*~$BaseN^$i~=~$positionValue\n";
+          steps += "~${baseNValue[baseNValue.length - i - 1]}~($BaseN)~=>~$digitValue~*~$BaseN^${i}~=~$positionValue\n";
+
         }
 
       steps += "Sum~of~all~position~values~=~$decimal~(decimal)";
@@ -570,7 +571,7 @@ List<String> calculateUnknownX_add(String A, String B, String y, String Z) {
     explanationInLateX += "A ~in~ base ~10 ~=~ $Z_value ~-~ $B_value ~=~ $A_Base10~";
 
     explanation += "find the base by trail and error starting from the largest value of A_x + 1 and convert to check with A_base10";
-    explanationInLateX += "\\text{find the base by trail and error starting from the largest value of A_x + 1 and convert to check with A_base10}";
+    explanationInLateX += "~\\text{find the base by trail and error starting from the largest value of A_x + 1 and convert to check with A_base10}~";
     returnedTextInLatex = A.toUpperCase() + " ~convert ~to~ decimal ~incement~ the~ base~ and~ compaore~ to~ its~ decimal~ value:~ " + A_Base10.toString();
     // Step 3: Return answer and working explanation
     return [A.toUpperCase() + " convert to decimal incement the base and compaore to its decimal value: " + A_Base10.toString(),explanation,returnedTextInLatex,explanationInLateX];
@@ -600,12 +601,12 @@ List<String> calculateUnknownA_add(String B, String y, String Z, String x) {
     String A_x = A.toRadixString(x_value);
 
     explanation += "Solve for A: A_"+x+" = "+Z+"_10 - "+B+"_"+y+"\n";
-    explanationInLateX += "Solve ~for~ A:~ A_"+x+"~ =~ "+Z+"_10 ~-~ "+B+"_"+y+"~";
+    explanationInLateX += "~Solve ~for~ A:~ A_"+x+"~ =~ "+Z+"_10 ~-~ "+B+"_"+y+"~";
     explanation += " A in base 10 = $Z_value - $B_value = $A \n";
     explanationInLateX += " ~A~ in~ base~ 10~ = ~$Z_value~ -~ $B_value~ =~ $A~ \n";
 
     explanation += "A in base $x = $A_x\n";
-    explanationInLateX += "A ~in~ base ~$x ~= ~$A_x\n~";
+    explanationInLateX += "~A ~in~ base ~$x ~= ~$A_x\n~";
 
  
 
@@ -638,9 +639,9 @@ List<String> calculateUnknownA_sub(String B, String y, String Z, String x) {
     explanation += "Solve for A: A_"+x+" = "+Z+"_10 + "+B+"_"+y+"\n";
     explanation += " A in base 10 = $Z_value + $B_value = $A \n";
     explanation += "A in base $x = $A_x\n";
-    explanationInLateX += "Solve~ for~ A:~ A_"+x+"~ =~ "+Z+"_10~ +~ "+B+"_"+y+"~";
-    explanationInLateX += " A~ in~ base~ 10~ = ~$Z_value~ +~ $B_value~ =~ $A~ \n";
-    explanationInLateX += "A~ in ~base~ $x ~= ~$A_x~\n";
+    explanationInLateX += "~Solve~ for~ A:~ A_"+x+"~ =~ "+Z+"_10~ +~ "+B+"_"+y+"~";
+    explanationInLateX += " ~A~ in~ base~ 10~ = ~$Z_value~ +~ $B_value~ =~ $A~ \n";
+    explanationInLateX += "~A~ in ~base~ $x ~= ~$A_x~\n";
 
     //A = Z_value
     // Step 2: Generate working explanation
@@ -670,9 +671,9 @@ List<String> calculateUnknownX_sub(String A, String B, String y, String Z) {
     explanation += "1. Solve for x:\n";
     explanation += "A in base 10 = $Z_value + $B_value = $A_Base10\n";
     explanation += "find the base by trail and error starting from the largest value of A_x + 1 and convert to check with A_base10";
-    explanationInLateX += "1.~ Solve~ for~ x:~";
-    explanationInLateX += "A ~in~ base ~10~ =~ $Z_value ~+~ $B_value ~=~ $A_Base10\n~";
-    explanationInLateX += "\text{find the base by trail and error starting from the largest value of A_x + 1 and convert to check with A_base10}";
+    explanationInLateX += "~1.~ Solve~ for~ x:~";
+    explanationInLateX += "~A ~in~ base ~10~ =~ $Z_value ~+~ $B_value ~=~ $A_Base10\n~";
+    explanationInLateX += "~text{find the base by trail and error starting from the largest value of A_x + 1 and convert to check with A_base10}";
   //"\text{string1 string2}"
     // Step 3: Return answer and working explanation
     String returnAnswer = A + "~\text{convert to decimal incement the base and compaore to its decimal value:}" + A_Base10.toString();
@@ -724,7 +725,7 @@ List<String> calculateUnknownA_mul(String B, String y, String Z, String x) {
     explanation += " A in base 10 = $Z_value ÷ $B_value = $A\n";
     explanation += "A in base $x = $A_x\n";
 
-    explanationInLateX +="Solve~for~A:~A_$x~*~$B\_$y~=~$Z\_10\n";
+    explanationInLateX +="~Solve~for~A:~A_{$x}~*~$B\_{$y}~=~$Z\_{10}\n";
     explanationInLateX +="~A~in~base~10~=~$Z_value~÷~$B_value~=~$A\n";
     explanationInLateX += "~A~in~base~$x~=~$A_x\n";
 
@@ -756,10 +757,10 @@ List<String> calculateUnknownX_mul(String A, String B, String y, String Z) {
           explanation += "Multiply A_decimal and B_decimal: $A_decimal * $B_value = ${A_decimal * B_value}\n";
           explanation += "Result matches Z_decimal ($Z_value), so x = $x\n";
           
-          explanationInLateX +="Convert~A~to~decimal~(base~10):\n";
-          explanationInLateX += "Try~base~$x:~$A\_$x~=~$A_decimal\_10\n";
-          explanationInLateX +="Multiply~A_decimal~and~B_decimal:~$A_decimal~*~$B_value~=~${A_decimal * B_value}\n";
-          explanationInLateX += "Result~matches~Z_decimal~($Z_value),~so~x~=~$x\n";
+          explanationInLateX +="~Convert~A~to~decimal~(base~10):\n";
+          explanationInLateX += "~Try~base~$x:~$A\_{$x}~=~$A_decimal\_{10}\n";
+          explanationInLateX +="~Multiply~A_decimal~and~B_decimal:~$A_decimal~*~$B_value~=~${A_decimal * B_value}\n";
+          explanationInLateX += "~Result~matches~Z_decimal~($Z_value),~so~x~=~$x\n";
 
           return [x.toString(), explanation, x.toString(), explanationInLateX];
         }
@@ -800,9 +801,9 @@ List<String> calculateUnknownA_divide(String B, String y, String Z, String x) {
     explanation += " A in base 10 = $Z_value × $B_value = $A\n";
     explanation += "A in base $x = $A_x\n";
 
-    explanationInLateX += "Solve~for~A:~A_$x~/~$B\_$y~=~$Z\_10\n";
+    explanationInLateX += "~Solve~for~A:~A_{$x}~/~$B\_{$y}~=~$Z\_10\n";
     explanationInLateX += "~A~in~base~10~=~$Z_value~×~$B_value~=~$A\n";
-    explanationInLateX += "A~in~base~$x~=~$A_x\n";
+    explanationInLateX += "~A~in~base~$x~=~$A_x\n";
 
     // Return answer and working explanation
     return [A_x.toString(), explanation,A_x.toString(),explanationInLateX];
@@ -828,15 +829,15 @@ List<String> calculateUnknownX_divide(String A, String B, String y, String Z) {
         A_decimal = baseToDecimalConversionFunc(A, x).toDouble();
         if ((A_decimal / B_value).toStringAsFixed(5) == Z_value.toStringAsFixed(5)) {
           explanation += "Convert A to decimal (base 10):\n";
-          explanation += "Try base $x: $A\_$x = $A_decimal\_10\n";
+          explanation += "Try base $x: $A\_{$x} = $A_decimal\_10\n";
           explanation += "Divide A_decimal by B_decimal: $A_decimal / $B_value = ${A_decimal / B_value}\n";
           explanation += "Result matches Z_decimal ($Z_value), so x = $x\n";
 
           explanationInLateX += "Convert~A~to~decimal~(base~10):\n";
 
-          explanationInLateX += "Try~base~$x:~$A\_$x~=~$A_decimal\_10\n";
-          explanationInLateX += "Divide~A_decimal~by~B_decimal:~$A_decimal~/~$B_value~=~${A_decimal~/~B_value}\n";
-          explanationInLateX += "Result~matches~Z_decimal~($Z_value),~so~x~=~$x\n";
+          explanationInLateX += "~Try~base~$x:~$A\_{$x}~=~$A_decimal\_10\n";
+          explanationInLateX += "~Divide~A_decimal~by~B_decimal:~$A_decimal~/~$B_value~=~${A_decimal~/~B_value}\n";
+          explanationInLateX += "~Result~matches~Z_decimal~($Z_value),~so~x~=~$x\n";
 
           return [x.toString(), explanation,x.toString(),explanationInLateX];
 
@@ -871,7 +872,7 @@ List<String> calculateUnknownZ_add(String A, String x, String B, String y) {
     explanation += "Solve for Z: $A\_$x + $B\_$y = Z_10\n";
     explanation += " Z in base 10 = $A_value + $B_value = $Z\n";
 
-    explanationInLateX += "Solve~for~Z:~$A\_$x~+~$B\_$y~=~Z_10\n";
+    explanationInLateX += "Solve~for~Z:~$A\_\{$x}~+~$B\_\{$y\}~=~Z_{10}\n";
     explanationInLateX += "~Z~in~base~10~=~$A_value~+~$B_value~=~$Z\n";
 
     // Return answer and working explanation
@@ -897,7 +898,7 @@ List<String> calculateUnknownZ_sub(String A, String x, String B, String y) {
     explanation += "Solve for Z: $A\_$x - $B\_$y = Z_10\n";
     explanation += " Z in base 10 = $A_value - $B_value = $Z\n";
 
-    explanationInLateX += "Solve~for~Z:~$A\_$x~-~$B\_$y~=~Z_10\n";
+    explanationInLateX += "Solve~for~Z:~$A\_{$x}~-~$B\_{$y}~=~Z_10\n";
     explanationInLateX += "~Z~in~base~10~=~$A_value~-~$B_value~=~$Z\n";
 
     // Return answer and working explanation
@@ -924,7 +925,7 @@ List<String> calculateUnknownZ_mul(String A, String x, String B, String y) {
     explanation += "Solve for Z: $A\_$x * $B\_$y = Z_10\n";
     explanation += " Z in base 10 = $A_value * $B_value = $Z\n";
 
-    explanationInLateX += "Solve~for~Z:~$A\_$x~*~$B\_$y~=~Z_10\n";
+    explanationInLateX += "~Solve~for~Z:~$A\_{$x}~*~$B\_{$y}~=~Z_10\n";
     explanationInLateX += "~Z~in~base~10~=~$A_value~*~$B_value~=~$Z\n";
 
     // Return answer and working explanation
@@ -956,7 +957,7 @@ List<String> calculateUnknownZ_divide(String A, String x, String B, String y) {
     explanation += "Solve for Z: $A\_$x / $B\_$y = Z_10\n";
     explanation += " Z in base 10 = $A_value ÷ $B_value = $Z\n";
 
-    explanationInLateX += "Solve~for~Z:~$A\_$x~/~$B\_$y~=~Z_10\n";
+    explanationInLateX += "~Solve~for~Z:~$A\_{$x}~/~$B\_{$y}~=~Z_{10}\n";
     explanationInLateX += "~Z~in~base~10~=~$A_value~÷~$B_value~=~$Z\n";
 
     // Return answer and working explanation

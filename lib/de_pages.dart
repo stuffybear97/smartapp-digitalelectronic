@@ -29,6 +29,8 @@ class newBaseNSolver extends StatefulWidget {
 
 class _newBaseNSolverState extends State<newBaseNSolver> {
   List _result = ['','','',''];
+  var mathtexresult = Math.tex("").texBreak();
+
   String dropdownValueArithmetic = '+'; //default the dropdown value to plus
   String dropdownValueUnknownSelection = 'A is unknown';
   TextEditingController _controllerA = TextEditingController();
@@ -74,7 +76,7 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
           Z = _controllerZ.text;
           y = _controllerBaseB.text;
           x = _controllerBaseA.text;
-          result = calculateUnknownZ_add(A,B,y,Z);
+          result = calculateUnknownZ_add(A,x,B,y);
         }
     } else if (dropdownValueArithmetic == '-') {
         if(dropdownValueUnknownSelection == "x is unknown"){
@@ -100,7 +102,7 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
           Z = _controllerZ.text;
           y = _controllerBaseB.text;
           x = _controllerBaseA.text;
-          result = calculateUnknownZ_sub(A,B,y,Z);
+          result = calculateUnknownZ_sub(A,x,B,y);
         }
     } else if (dropdownValueArithmetic == '*') {
       if(dropdownValueUnknownSelection == "x is unknown"){
@@ -126,7 +128,7 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
           Z = _controllerZ.text;
           y = _controllerBaseB.text;
           x = _controllerBaseA.text;
-          result = calculateUnknownZ_mul(A,B,y,Z);
+          result = calculateUnknownZ_mul(A,x,B,y);
         }
     } else if (dropdownValueArithmetic == '/') {
       if(dropdownValueUnknownSelection == "x is unknown"){
@@ -152,7 +154,7 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
           Z = _controllerZ.text;
           y = _controllerBaseB.text;
           x = _controllerBaseA.text;
-          result = calculateUnknownZ_divide(A,B,y,Z);
+          result = calculateUnknownZ_divide(A,x,B,y);
         }
       
     }
@@ -161,6 +163,7 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
 
     setState(() {
       _result = result;
+      mathtexresult = Math.tex(_result[2]+_result[3]).texBreak();
     });
   }  
   List<String> arithmeticItems = ['+', '-', '*', '/'];
@@ -310,6 +313,12 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
                 child: TeXViewDocument(_result[0]+_result[1]),
               ),
             ),
+            Wrap(
+              children: 
+                mathtexresult.parts
+              ,
+
+            ),
             
 
             ElevatedButton(
@@ -389,7 +398,7 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
   final TextEditingController  _controllerBDC= TextEditingController();
   final TextEditingController _controllerBaseN = TextEditingController();
   bool showBaseN = false;
-
+  var mathtexresult = Math.tex("").texBreak();
   String _result = '';
 
   void _convert() async {
@@ -469,7 +478,9 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
     }
 
     setState(() {
-      _result = result;
+      //_result = result;
+       _result = result;
+      mathtexresult = Math.tex(result).texBreak();
     });
   }  
   
@@ -521,7 +532,7 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
                     break;
                     case 'baseN to Dec':
                     showBaseN = true;
-                    hintTextSelected = 'number,baseN (e.g. 101,2 or E,16)';
+                    hintTextSelected = 'number';
                     baseNhintTextSelected = 'baseN (e.g. if num is 101, input 2 or E,input 16)';
                     break;
                     case 'Dec to baseN':
@@ -577,6 +588,12 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
             ],
             
             ),
+            Wrap(
+              children: 
+                mathtexresult.parts
+              ,
+
+            ),
 
 /*             ConstrainedBox(constraints: BoxConstraints(
               maxHeight: MediaQuery.of(context).size.height - 300,
@@ -609,12 +626,15 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
   }
 }
 
+//old code
 class NumberSystemBaseN extends StatefulWidget {
   @override
   _NumberSystemBaseNState createState() => _NumberSystemBaseNState();
 }
 
 class _NumberSystemBaseNState extends State<NumberSystemBaseN> {
+  var mathtexresult = Math.tex("").texBreak();
+
   String dropdownValue = 'x is unknown';
   TextEditingController _controllerA = TextEditingController();
   TextEditingController _controllerBaseA = TextEditingController();
@@ -665,6 +685,8 @@ class _NumberSystemBaseNState extends State<NumberSystemBaseN> {
 
     setState(() {
       _result = result;
+      mathtexresult = Math.tex(_result[2]+_result[3]).texBreak();
+
     });
   }  
   @override
@@ -752,6 +774,14 @@ class _NumberSystemBaseNState extends State<NumberSystemBaseN> {
                 ],),
                       
             ),
+
+            Wrap(
+              children: 
+                mathtexresult.parts
+              ,
+
+            ),
+
             ElevatedButton(
               onPressed: () {
                 // Navigate back to the first page using a named route

@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         '/MathTest': (context) => MathExample(),
         //Math.tex(r'\frac a b', mathStyle: MathStyle.text)
         '/newBaseNSolver':  (context) => newBaseNSolver(),
-        '/newBaseNSolverPage2':  (context) => newBaseNSolverPG2()
+     //   '/newBaseNSolverPage2':  (context) => newBaseNSolverPG2()
 
         
       },
