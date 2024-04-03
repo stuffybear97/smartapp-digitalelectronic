@@ -455,7 +455,8 @@ String baseToDecimalConversion(String dec, String BaseN) {
     List<String> parts = [dec, BaseN];
       String baseNValue = parts[0];
       int baseN = int.parse(parts[1]);
-      String steps = "Step-by-step working:\n";
+      String steps = r'\begin{aligned} Step-&by-step~working:  \\ &abcdef \end{aligned}';
+      //align text using \begin{aligned} and \end{aligned}, \\ to go to next line
       int decimal = 0;
           // Process each digit from right to left
         for (int i = 0; i < baseNValue.length; i++) {
@@ -467,8 +468,8 @@ String baseToDecimalConversion(String dec, String BaseN) {
 
         }
 
-      steps += "Sum~of~all~position~values~=~$decimal~(decimal)";
-      String result = "Decimal:~$decimal~$steps";
+      steps += "~Sum~of~all~position~values~=~$decimal~(decimal)";
+      String result = "\\begin{aligned} ~Decimal:  \\end{aligned} ~$decimal~$steps";
       //int decimalValue = int.parse(parts[0], radix: int.parse(parts[1]));
       return result;
   }

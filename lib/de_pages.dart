@@ -398,7 +398,7 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
   final TextEditingController  _controllerBDC= TextEditingController();
   final TextEditingController _controllerBaseN = TextEditingController();
   bool showBaseN = false;
-  var mathtexresult = Math.tex("").texBreak();
+  var mathtexresult = Math.tex('').texBreak();
   String _result = '';
 
   void _convert() async {
@@ -480,7 +480,7 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
     setState(() {
       //_result = result;
        _result = result;
-      mathtexresult = Math.tex(result).texBreak();
+     // mathtexresult = Math.tex(result).texBreak();
     });
   }  
   
@@ -588,13 +588,18 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
             ],
             
             ),
-            Wrap(
-              children: 
-                mathtexresult.parts
-              ,
+          //  Wrap(
+           //   children: 
+                //Math.tex(_result)
+                //mathtexresult.parts,
+              
 
-            ),
-
+            //),
+            //wrap and constrain box for the output
+            
+            
+            
+             Math.tex(_result,textScaleFactor: 2),
 /*             ConstrainedBox(constraints: BoxConstraints(
               maxHeight: MediaQuery.of(context).size.height - 300,
             ),
