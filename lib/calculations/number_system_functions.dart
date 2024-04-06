@@ -12,25 +12,29 @@ import 'dart:math';
 Future<String> convertBinaryToDecimal(String binaryValue) async {
   try {
     int decimal = int.parse(binaryValue, radix: 2);
-    String stepsToSolve = '';
+    String stepsToSolve = r'';//align text using \begin{aligned} and \end{aligned}, \\ to go to next line
+
     int lenght = binaryValue.length;
     var digits = binaryValue.split('');
     int power = lenght-1;
     for (int i = 0; i < lenght; i++) {
+            
       int check1or0;
       if(i==0) {
         check1or0 = int.parse(digits[i], radix: 2);
-        stepsToSolve = "$stepsToSolve~$check1or0* ~\~ 2^$power~ \ ";
+        //stepsToSolve = "$stepsToSolve~$check1or0* ~\~ 2^$power~ \ ";
+        //change stepsToSolve to concognate string
+        stepsToSolve = r'' + stepsToSolve + r'' +check1or0.toString() +"* \ 2^" +r'{'+ power.toString() + r'}' + r'' + r'';
 
       }
       else{
         check1or0 = int.parse(digits[i], radix: 2);
        
-        stepsToSolve = stepsToSolve + "~~+" + check1or0.toString() + "~*~ 2^" + power.toString();
+        stepsToSolve = r'' + stepsToSolve + "+" + check1or0.toString() + "* 2^" +r'{'+ power.toString()+ r'}';
       }
       power = power - 1;
           }
-    return   "~" +stepsToSolve + "~=~" + decimal.toString();
+    return   r'\begin{aligned}' +stepsToSolve + r'=\\' + decimal.toString() + r'\end{aligned}';
   } catch (e) {
     return 'Invalid Input';
   }
@@ -42,7 +46,7 @@ Future<String> convertDecimalToBinary(String decimalValue) async {
     if (decimal == 0) {
       return "0\n\n~Decimal~ 0 ~in~ binary~ is~ 0.";
     }
-
+//align text using \begin{aligned} and \end{aligned}, \\ to go to next line
     String binary = "";
     String steps = "working:\n";
     
@@ -455,7 +459,7 @@ String baseToDecimalConversion(String dec, String BaseN) {
     List<String> parts = [dec, BaseN];
       String baseNValue = parts[0];
       int baseN = int.parse(parts[1]);
-      String steps = r'\begin{aligned} Step-&by-step~working:  \\ &abcdef \end{aligned}';
+      String steps = r'Step-by-step~working:';
       //align text using \begin{aligned} and \end{aligned}, \\ to go to next line
       int decimal = 0;
           // Process each digit from right to left
@@ -464,12 +468,15 @@ String baseToDecimalConversion(String dec, String BaseN) {
           num positionValue = digitValue * pow(baseN, i); // Equivalent to pow(16, i)
           decimal += int.parse(positionValue.toString());
           
-          steps += "~${baseNValue[baseNValue.length - i - 1]}~($BaseN)~=>~$digitValue~*~$BaseN^${i}~=~$positionValue\n";
-
+          //steps += "\\\\~${baseNValue[baseNValue.length - i - 1]}~($BaseN)~=>~$digitValue~*~$BaseN^${i}~=~$positionValue\n";
+          steps += r'\\'+ baseNValue[baseNValue.length - i - 1]+ r'~in~base~' + BaseN + r'~=>~' + digitValue.toString() + r'~*~' + BaseN + r'^' + i.toString() + r'~=' + positionValue.toString() + r'~';
         }
 
-      steps += "~Sum~of~all~position~values~=~$decimal~(decimal)";
-      String result = "\\begin{aligned} ~Decimal:  \\end{aligned} ~$decimal~$steps";
+      //steps += "~Sum~of~all~position~values~=~$decimal~(decimal)";
+      //convert to concatenated string as math does not support $variable$ in the string
+      steps += r'\\~Sum~of~all~position~values~=~\\' + decimal.toString() + r'~(decimal)';
+      //String result = " ~Decimal: ~$decimal~$steps  \\end{aligned}";
+      String result = r'\begin{aligned}Decimal:~' + decimal.toString() + r'\\' + steps + r'\\~\end{aligned}';
       //int decimalValue = int.parse(parts[0], radix: int.parse(parts[1]));
       return result;
   }

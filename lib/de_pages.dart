@@ -599,7 +599,7 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
             
             
             
-             Math.tex(_result,textScaleFactor: 2),
+             //Math.tex(_result,textScaleFactor: 2),
 /*             ConstrainedBox(constraints: BoxConstraints(
               maxHeight: MediaQuery.of(context).size.height - 300,
             ),
