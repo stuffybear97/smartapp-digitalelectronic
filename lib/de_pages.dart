@@ -38,6 +38,13 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
   TextEditingController _controllerB = TextEditingController();
   TextEditingController _controllerBaseB = TextEditingController();
   TextEditingController _controllerZ = TextEditingController(); // Added TextField for Z
+    void _clearTextFields() async {
+      _controllerA.clear();
+      _controllerBaseA.clear();
+      _controllerB.clear();
+      _controllerBaseB.clear();
+      _controllerZ.clear();
+    }
 
     void _convert() async {
       SystemChrome.setPreferredOrientations([
@@ -163,7 +170,7 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
 
     setState(() {
       _result = result;
-      mathtexresult = Math.tex(_result[2]+_result[3]).texBreak();
+      //mathtexresult = Math.tex(_result[2]+_result[3]).texBreak();
     });
   }  
   List<String> arithmeticItems = ['+', '-', '*', '/'];
@@ -282,11 +289,26 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
 
             ),
             //button to solve the equation
-            
-            ElevatedButton(
-              onPressed: _convert,
-              child: Text('Solve'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                
+                
+                   ElevatedButton(
+                                      onPressed: _convert,
+                                      child: Text('Solve'),
+                                    ),
+                
+                                  ElevatedButton(
+                                    onPressed: 
+                                    _clearTextFields,
+                                    child: Text('Clear Text Fields'),
+                                  ),
+
+              ],
+                              
             ),
+            
             //output the result in Math.tex in a scroll view  
             ConstrainedBox(constraints: BoxConstraints(
               maxHeight: MediaQuery.of(context).size.height - 300,
@@ -295,7 +317,7 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
               scrollDirection: Axis.horizontal,
                 child: Row(children: [
                   Padding(padding:  EdgeInsets.all(8.0),
-                  child: Math.tex(_result[2]+"~"+_result[3],textScaleFactor: 4.0,)
+                  child: Math.tex(r'\begin{aligned}Answer:~'+_result[2]+"~"+_result[3]+r'\end{aligned}',textScaleFactor: 1.0,)
                   ),
                 
                 ],),
@@ -304,7 +326,7 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
             ),
 
             //text for the output that can does not lead to pixel overflow
-            ConstrainedBox(
+            /* ConstrainedBox(
               constraints: BoxConstraints(
                 maxHeight: MediaQuery.of(context).size.height - 300,
               ),
@@ -312,7 +334,7 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
                 renderingEngine: const TeXViewRenderingEngine.katex(),
                 child: TeXViewDocument(_result[0]+_result[1]),
               ),
-            ),
+            ), */
             Wrap(
               children: 
                 mathtexresult.parts
@@ -487,7 +509,7 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('number system conversion'),
       ),
@@ -570,8 +592,29 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
               onPressed: 
               _convert, 
             ),
-            
-            Wrap(
+            //Infintescroll
+            SingleChildScrollView(
+              physics: ClampingScrollPhysics(),
+              child: Wrap(
+                direction: Axis.horizontal,
+                children: 
+                
+                [
+                  ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 800),
+                    child: SingleChildScrollView(
+                      physics: ClampingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      child: SelectableMath.tex(
+                        _result,
+                        textStyle: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+           /*  Wrap(
             direction: Axis.horizontal,
             children: [
               ConstrainedBox(constraints: BoxConstraints(maxWidth: 800),
@@ -584,10 +627,11 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
                                 textStyle: TextStyle(fontSize: 18),
                               ),
                             ),
-              )
+              ),
+              
             ],
             
-            ),
+            ), */ 
           //  Wrap(
            //   children: 
                 //Math.tex(_result)
