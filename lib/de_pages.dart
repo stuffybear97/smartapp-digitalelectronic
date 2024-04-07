@@ -536,6 +536,10 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
                       hintTextSelected = 'Enter decimal';
                       showBaseN = false;
                       break;
+                    case 'Hex to Dex':
+                      hintTextSelected = 'Enter Hex digits';
+                      showBaseN = false;
+                      break;
                     case 'Hex to Binary':
                       hintTextSelected = 'Enter hex';
                       showBaseN = false;
@@ -605,9 +609,10 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
                     child: SingleChildScrollView(
                       physics: ClampingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
-                      child: SelectableMath.tex(
+                      child: Math.tex(
                         _result,
-                        textStyle: TextStyle(fontSize: 18),
+                        
+                        textScaleFactor: 1.0,
                       ),
                     ),
                   ),

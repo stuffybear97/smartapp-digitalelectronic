@@ -34,7 +34,7 @@ Future<String> convertBinaryToDecimal(String binaryValue) async {
       }
       power = power - 1;
           }
-    return   r'\begin{aligned}' +stepsToSolve + r'=\\' + decimal.toString() + r'\end{aligned}';
+    return   r'\begin{aligned}' +stepsToSolve + r'~=' + decimal.toString() + r'\end{aligned}';
   } catch (e) {
     return 'Invalid Input';
   }
@@ -54,12 +54,12 @@ Future<String> convertDecimalToBinary(String decimalValue) async {
       int remainder = decimal % 2;
       binary = remainder.toString() + binary;
      // steps += r'Decimal:$decimal/2 ~=~ Q:~ ${decimal ~/ 2},~ R:$remainder(binary~ digit).~\n';
-      steps += r'\\Decimal: ' + decimal.toString() + r'/2 ~=~ Q: ' + (decimal ~/ 2).toString() + r', R: ' + remainder.toString() + r'(binary digit).' + '\n';
+      steps += r'\\Decimal: ' + decimal.toString() + r'/2 ~=~ Q: ' + (decimal ~/ 2).toString() + r', R: ' + remainder.toString() + r'(binary~digit).' + '\n';
 
       decimal = decimal ~/ 2;
     }
 
-    String result = r'\begin{aligned}Result:\\' + binary + r'\\'+steps + r'\end{aligned}';
+    String result = r'\begin{aligned}Result:~' + binary + r',~'+steps + r'\end{aligned}';
     return result;
   } catch (e) {
     return 'Invalid Input';
