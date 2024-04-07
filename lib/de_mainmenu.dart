@@ -22,7 +22,7 @@ class de_mainmenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Digital Electronics'),
+        title: Text('Digital Number Systems'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -44,13 +44,13 @@ class de_mainmenu extends StatelessWidget {
           ),
           
           
-          ElevatedButton(
+          /* ElevatedButton(
             onPressed: () {
               // Navigate to the fourth page using a named route
               Navigator.pushNamed(context, '/fourth');
             },
             child: Text('kMap'),
-          ),
+          ), */
           
         ],
       ),
