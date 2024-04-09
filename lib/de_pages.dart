@@ -44,6 +44,10 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
       _controllerB.clear();
       _controllerBaseB.clear();
       _controllerZ.clear();
+      setState(() {
+      _result = ['','','',''];
+      //mathtexresult = Math.tex(_result[2]+_result[3]).texBreak();
+    });
     }
 
     void _convert() async {
@@ -66,7 +70,7 @@ class _newBaseNSolverState extends State<newBaseNSolver> {
           Z = _controllerZ.text;
           y = _controllerBaseB.text;
           x = _controllerBaseA.text;
-          result = calculateUnknownX_add(A,B,y,Z);
+          result = calculateUnknownX_add_new(A,B,y,Z);
         }
         else if(dropdownValueUnknownSelection == "A is unknown")
         {

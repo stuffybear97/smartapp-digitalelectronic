@@ -781,8 +781,8 @@ List<String> calculateUnknownX_mul(String A, String B, String y, String Z) {
           
           explanationInLateX +=r'\\'+"~Convert~A~to~decimal~(base~10):\n";
           explanationInLateX +=r'\\'+ "~Try~base~$x:~$A\_{$x}~=~$A_decimal\_{10}\n";
-          explanationInLateX +=r'\\'+"~Multiply~A_decimal~and~B_decimal:~$A_decimal~*~$B_value~=~${A_decimal * B_value}\n";
-          explanationInLateX += r'\\'+"~Result~matches~Z_decimal~($Z_value),~so~x~=~$x\n";
+          explanationInLateX +=r'\\'+"~Multiply~A~in~decimal~and~B~in~decimal:~$A_decimal~*~$B_value~=~${A_decimal * B_value}\n";
+          explanationInLateX += r'\\'+"~Result~matches~Z~in~decimal~($Z_value),~so~x~=~$x\n";
 
           return [x.toString(), explanation, x.toString(), explanationInLateX];
         }
@@ -857,9 +857,9 @@ List<String> calculateUnknownX_divide(String A, String B, String y, String Z) {
 
           explanationInLateX += r'\\'+"Convert~A~to~decimal~(base~10):";
 
-          explanationInLateX += r'\\'+"~Try~base~$x:~$A\_{$x}~=~$A_decimal\_10\n";
-          explanationInLateX += r'\\'+"~Divide~A_decimal~by~B_decimal:~$A_decimal~/~$B_value~=~${A_decimal~/~B_value}\n";
-          explanationInLateX += r'\\'+"~Result~matches~Z_decimal~($Z_value),~so~x~=~$x\n";
+          explanationInLateX += r'\\'+"~Try~base~$x:~$A\_{$x}~=~$A_decimal\_{10}\n";
+          explanationInLateX += r'\\'+"~Divide~A~in~decimal~by~B~in~decimal:~$A_decimal~/~$B_value~=~${A_decimal~/~B_value}";
+          explanationInLateX += r'\\'+"~Result~matches~Z~in~decimal~($Z_value),~so~x~=~$x\n";
 
           return [x.toString(), explanation,x.toString(),explanationInLateX];
 
@@ -986,5 +986,90 @@ List<String> calculateUnknownZ_divide(String A, String x, String B, String y) {
     return [Z.toStringAsFixed(5), explanation, Z.toStringAsFixed(5), explanationInLateX];
   } catch (E) {
     return ['Error: Invalid input.', 'Error: Invalid input.','Error: Invalid input.', 'Error: Invalid input.'];
+  }
+}
+
+
+List<String> calculateUnknownX_add_new(String A, String B, String y, String Z) {
+  try {
+    String explanation = '';
+    String explanationInLateX = '';
+    int y_value = int.parse(y);
+    int Z_value = int.parse(Z);
+    int B_value = baseToDecimalConversionFunc(B, y_value);
+
+    // Step 1: Convert A to decimal (base 10)
+    int A_decimal = 0;
+    for (int x = 2; x <= 36; x++) {
+      try {
+        A_decimal = baseToDecimalConversionFunc(A, x);
+        int result = A_decimal + B_value;
+        if (result == Z_value) {
+          explanation += "Convert A to decimal (base 10):\n";
+          explanation += "Try base $x: $A\\_$x = $A_decimal\\_10\n";
+          explanation += "Perform addition: $A_decimal + $B_value = ${result}\n";
+          explanation += "Result matches Z_decimal ($Z_value), so x = $x\n";
+
+          explanationInLateX += r'\\' + "~Convert~A~to~decimal~(base~10):";
+          explanationInLateX += r'\\' + "~Try~base~$x:~$A\\\_{$x}~=~$A_decimal\_{10}";
+          explanationInLateX += r'\\' + "~Perform~addition:~$A_decimal~+~$B_value~=~${result}";
+          explanationInLateX += r'\\' + "~Result~matches~Z\_decimal~($Z\_value),~so~x~=~$x";
+
+          return [x.toString(), explanation, x.toString(), explanationInLateX];
+        }
+      } catch (e) {
+        // Ignore invalid base conversion errors and continue the loop
+      }
+    }
+
+    // If no valid base is found, return an error message
+    explanation += "No valid base found for the given inputs.\n";
+    explanationInLateX += r'\\' + "~No~valid~base~found~for~the~given~inputs.\\n";
+    return ['', explanation, '', explanationInLateX];
+  } catch (e) {
+    // Handle any other exceptions and return an error message
+    return ['', 'An error occurred: $e', '', 'An~error~occurred:~$e'];
+  }
+}
+
+List<String> calculateUnknownX_sub_new(String A, String B, String y, String Z) {
+  try {
+    String explanation = '';
+    String explanationInLateX = '';
+    int y_value = int.parse(y);
+    int Z_value = int.parse(Z);
+    int B_value = baseToDecimalConversionFunc(B, y_value);
+
+    // Step 1: Convert A to decimal (base 10)
+    int A_decimal = 0;
+    for (int x = 2; x <= 36; x++) {
+      try {
+        A_decimal = baseToDecimalConversionFunc(A, x);
+        int result = A_decimal - B_value;
+        if (result == Z_value) {
+          explanation += "Convert A to decimal (base 10):\n";
+          explanation += "Try base $x: $A\\_$x = $A_decimal\\_10\n";
+          explanation += "Perform subtraction: $A_decimal - $B_value = ${result}\n";
+          explanation += "Result matches Z_decimal ($Z_value), so x = $x\n";
+
+          explanationInLateX += r'\\' + "~Convert~A~to~decimal~(base~10):";
+          explanationInLateX += r'\\' + "~Try~base~$x:~$A\_{$x}~=~$A_decimal\_{10}";
+          explanationInLateX += r'\\' + "~Perform~subtraction:~$A_decimal~-~$B_value~=~${result}";
+          explanationInLateX += r'\\' + "~Result~matches~Z\_decimal~($Z~value),~so~x~=~$x";
+
+          return [x.toString(), explanation, x.toString(), explanationInLateX];
+        }
+      } catch (e) {
+        // Ignore invalid base conversion errors and continue the loop
+      }
+    }
+
+    // If no valid base is found, return an error message
+    explanation += "No valid base found for the given inputs.\n";
+    explanationInLateX += r'\\' + "~No~valid~base~found~for~the~given~inputs.\\n";
+    return ['', explanation, '', explanationInLateX];
+  } catch (e) {
+    // Handle any other exceptions and return an error message
+    return ['', 'An error occurred: $e', '', 'An~error~occurred:~$e'];
   }
 }
