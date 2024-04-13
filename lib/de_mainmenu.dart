@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+/* 
 import 'package:flutter/services.dart';
 import 'package:Number_System/de_pages.dart';
 import 'calculations/number_system_functions.dart';
@@ -16,7 +17,7 @@ import 'package:flutter_math_fork/tex.dart';
 import 'mathdemo/demo.dart';
 import 'mathdemo/equations.dart';
 import 'mathdemo/feature.dart';
-
+ */
 class de_mainmenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
