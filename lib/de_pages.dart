@@ -1,21 +1,14 @@
 
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'calculations/number_system_functions.dart';
-import 'calculations/kmap.dart';
+//import 'calculations/kmap.dart';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_tex/flutter_tex.dart';
+//import 'package:flutter/material.dart';
+//import 'package:flutter_tex/flutter_tex.dart';
 
-import 'package:flutter_math_fork/ast.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
-import 'package:flutter_math_fork/tex.dart';
 
-import 'mathdemo/demo.dart';
-import 'mathdemo/equations.dart';
-import 'mathdemo/feature.dart';
 
 
 
@@ -368,7 +361,7 @@ class NumbSysConversion extends StatefulWidget {
   @override
   _NumbSysConversionState createState() => _NumbSysConversionState();
 }
-const List<String> list = <String>['Binary to Dec', 'Dec to Binary', 'Dec to Hex', 'Hex to Dex'
+const List<String> list = <String>['Binary to Dec', 'Dec to Binary', 'Dec to Hex', 'Hex to Dec'
 ,'Hex to Binary','Binary to Hex','dec to 2complements','hex to 2complements','baseN to Dec','Dec to baseN'];
 String _selection = 'Binary to Dec';
 String hintTextSelected = '';
@@ -456,7 +449,7 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
       //hintTextSelected = 'Enter decimal';
       result = await convertDecimalToHex(binaryString);
     }
-    else if(_selection == "Hex to Dex") {
+    else if(_selection == "Hex to Dec") {
       showBaseN = false;
       binaryString = _controllerBDC.text;
       //hintTextSelected = 'Enter Hex digits';
@@ -540,7 +533,7 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
                       hintTextSelected = 'Enter decimal';
                       showBaseN = false;
                       break;
-                    case 'Hex to Dex':
+                    case 'Hex to Dec':
                       hintTextSelected = 'Enter Hex digits';
                       showBaseN = false;
                       break;
@@ -685,12 +678,14 @@ class _NumbSysConversionState extends State<NumbSysConversion> {
 }
 
 //old code
-class NumberSystemBaseN extends StatefulWidget {
+/* 
+
+class NumberSystemBaseN_OLD extends StatefulWidget {
   @override
-  _NumberSystemBaseNState createState() => _NumberSystemBaseNState();
+  _NumberSystemBaseNState_OLD createState() => _NumberSystemBaseNState_OLD();
 }
 
-class _NumberSystemBaseNState extends State<NumberSystemBaseN> {
+class _NumberSystemBaseNState_OLD extends State<NumberSystemBaseN_OLD> {
   var mathtexresult = Math.tex("").texBreak();
 
   String dropdownValue = 'x is unknown';
@@ -1008,5 +1003,5 @@ class _KmapState extends State<Kmap> {
     );
   }
 }
-
+ */
 
