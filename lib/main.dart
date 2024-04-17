@@ -31,7 +31,6 @@ class MyApp extends StatelessWidget {
         '/': (context) => MainMenu(),
         '/de_mainmenu':(context) => de_mainmenu(),
         '/NumbSysConversion': (context) => NumbSysConversion(),
-        '/NumberSystemBaseN': (context) => NumberSystemBaseN_OLD(),
         '/fourth': (context) => Kmap(),
         '/fifth': (context) => FifthPage(),
         '/LaTex test': (context) => TeXViewDocumentExamples(),
